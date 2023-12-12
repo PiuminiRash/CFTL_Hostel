@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="506.0" prefWidth="1278.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.SubjectStudentController">
+   <children>
+      <ImageView fitHeight="506.0" fitWidth="1278.0" layoutY="-2.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assests/gradient_4_16.jpg" />
+         </image>
+      </ImageView>
+      <Text layoutX="40.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject Student List " AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tblSubjectStudent" layoutX="27.0" layoutY="60.0" prefHeight="423.0" prefWidth="885.0">
+        <columns>
+          <TableColumn fx:id="colStudentId" prefWidth="103.0" text="Student ID " />
+          <TableColumn fx:id="colStudentName" prefWidth="192.99996948242188" text="Student Name" />
+            <TableColumn fx:id="colSection" prefWidth="147.0" text="Section" />
+            <TableColumn fx:id="colBucket1" prefWidth="147.0" text="Bucket 1" />
+            <TableColumn fx:id="colBucket2" prefWidth="147.0" text="Bucket 2" />
+            <TableColumn fx:id="colBucket3" prefWidth="147.0" text="Bucket 3" />
+        </columns>
+      </TableView>
+      <ImageView fitHeight="316.0" fitWidth="417.0" layoutX="911.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/Subjectwall-removebg-preview.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

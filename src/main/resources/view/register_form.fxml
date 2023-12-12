@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1112.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.RegisterController">
+<children>
+    <ImageView fitHeight="650.0" fitWidth="1119.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <image>
+            <Image url="@../assests/gradient_4_16.jpg" />
+        </image>
+    </ImageView>
+    <AnchorPane layoutY="524.0" opacity="0.39" prefHeight="97.0" prefWidth="263.0" style="-fx-background-color: gray;">
+        <children>
+            <Label fx:id="lblDate" layoutX="42.0" layoutY="58.0" prefHeight="36.0" prefWidth="166.0">
+                <font>
+                    <Font size="25.0" />
+                </font>
+            </Label>
+            <Label fx:id="lblTime" layoutX="24.0" prefHeight="73.0" prefWidth="222.0">
+                <font>
+                    <Font size="50.0" />
+                </font></Label>
+        </children>
+    </AnchorPane>
+    <AnchorPane blendMode="MULTIPLY" layoutX="714.0" layoutY="100.0" prefHeight="502.0" prefWidth="361.0" style="-fx-background-color: white; -fx-region-border: 90; -fx-background-radius: 30;" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="100.0">
+        <children>
+            <Separator layoutX="23.0" layoutY="32.0" prefHeight="4.0" prefWidth="94.0" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="32.0" />
+            <Separator layoutX="237.0" layoutY="32.0" prefHeight="4.0" prefWidth="94.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="32.0" />
+            <Text fill="#837878" layoutX="151.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SING IN">
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+            </Text>
+            <JFXTextField fx:id="txtUserName" layoutX="49.0" layoutY="90.0" prefHeight="31.0" prefWidth="235.0" promptText="Aleval Camp" />
+            <Text layoutX="48.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name ">
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+            </Text>
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="292.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../assests/password.png" />
+                </image>
+            </ImageView>
+            <Text layoutX="50.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Password">
+                <font>
+                    <Font name="System Bold" size="15.0" />
+                </font>
+            </Text>
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="291.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@../assests/username.png" />
+                </image>
+            </ImageView>
+            <JFXButton layoutX="49.0" layoutY="414.0" onAction="#btnRegisterOnAction" prefHeight="31.0" prefWidth="269.0" style="-fx-background-color: green;" text="REGISTER" textFill="WHITE" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="43.0" />
+            <JFXPasswordField fx:id="txtPassword" layoutX="51.0" layoutY="161.0" prefHeight="31.0" prefWidth="235.0" promptText="**********" />
+            <Hyperlink layoutX="49.0" layoutY="445.0" onAction="#LogInOnAction" text="You have an account ?  LogIn" textFill="#0f6807" />
+            <JFXPasswordField fx:id="txtConfirmPassword" layoutX="50.0" layoutY="231.0" prefHeight="31.0" prefWidth="235.0" promptText="**********" />
+            <Text layoutX="51.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm Password">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="290.0" layoutY="238.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assests/password.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="51.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Text>
+            <JFXTextField fx:id="txtemail" layoutX="49.0" layoutY="303.0" prefHeight="31.0" prefWidth="245.0" promptText="cftl@gmail.com" />
+            <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="292.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../assests/gmailIcon.png" />
+               </image>
+            </ImageView>
+            <Hyperlink layoutX="224.0" layoutY="334.0" text="Send OTP" textFill="#3ca13f" />
+            <TextField layoutX="49.0" layoutY="364.0" prefHeight="31.0" prefWidth="263.0" promptText="Enter OTP" />
+        </children>
+    </AnchorPane>
+    <Separator layoutX="671.0" layoutY="29.0" opacity="0.25" orientation="VERTICAL" prefHeight="592.0" prefWidth="0.0" AnchorPane.bottomAnchor="29.0" AnchorPane.topAnchor="29.0" />
+    <ImageView fitHeight="104.0" fitWidth="142.0" layoutX="843.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../assests/CFTLLogo-removebg-preview.png" />
+        </image>
+    </ImageView>
+      <ImageView fitHeight="512.0" fitWidth="448.0" layoutX="159.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assests/CFTLLogo-removebg-preview.png" />
+         </image>
+      </ImageView>
+</children>
+</AnchorPane>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootNodes" prefHeight="477.0" prefWidth="1059.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.UpdateAttendanceController">
+   <children>
+      <ImageView fitHeight="477.0" fitWidth="1059.0" layoutX="859.0" layoutY="9.0" pickOnBounds="true" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assests/gradient_4_16.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblAttendance" layoutX="31.0" layoutY="115.0" prefHeight="235.0" prefWidth="1007.0" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="21.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="193.0" text="Teacher Id" />
+          <TableColumn fx:id="colName" minWidth="0.0" prefWidth="619.0" text="Teacher Name" />
+            <TableColumn fx:id="colAction" minWidth="0.0" prefWidth="194.0" text="Action" />
+        </columns>
+      </TableView>
+      <Text layoutX="31.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher Id :" AnchorPane.leftAnchor="31.0" />
+      <Text layoutX="323.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Teacher Name :" AnchorPane.leftAnchor="323.0" />
+      <JFXComboBox fx:id="cmbId" layoutX="31.0" layoutY="138.0" onAction="#cmbIdOnAction" prefHeight="31.0" prefWidth="192.0" AnchorPane.topAnchor="138.0" />
+      <JFXButton fx:id="btnMarkAttendance" layoutX="591.0" layoutY="138.0" onAction="#btnMarkAttendanceOnAction" prefHeight="31.0" prefWidth="58.0" style="-fx-background-color: green;" text="Mark " />
+      <Label fx:id="lblName" layoutX="328.0" layoutY="91.0" AnchorPane.leftAnchor="328.0" AnchorPane.topAnchor="138.0" />
+      <JFXButton fx:id="btnAttendanceSave" layoutX="647.0" layoutY="283.0" onAction="#btnAttendanceSaveOnAction" style="-fx-background-color: white;" text="Attendance Save" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <Text layoutX="31.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date :" AnchorPane.topAnchor="57.0" />
+      <Label layoutX="31.0" layoutY="25.0" text="Update Attendance" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dateDate" layoutX="75.0" layoutY="53.0" />
+   </children>
+</AnchorPane>

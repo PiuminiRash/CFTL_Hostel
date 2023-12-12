@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootNode" prefHeight="506.0" prefWidth="1278.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.ViewTeacherController">
+   <children>
+      <ImageView fitHeight="506.0" fitWidth="1278.0" layoutY="-1.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assests/gradient_4_16.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblTaecherDetails" layoutX="27.0" layoutY="80.0" prefHeight="419.0" prefWidth="1228.0" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="65.0">
+        <columns>
+          <TableColumn fx:id="colTeacherId" prefWidth="113.0" text="Id" />
+          <TableColumn fx:id="colTeacherName" prefWidth="272.0" text="Teacher Name" />
+            <TableColumn fx:id="colAddress" prefWidth="242.0" text="Address" />
+            <TableColumn fx:id="colNIC" prefWidth="285.0" text="NIC" />
+            <TableColumn fx:id="colEdit" prefWidth="164.0" text="Edit" />
+            <TableColumn fx:id="colDelete" prefWidth="151.0" text="Delete" />
+        </columns>
+      </TableView>
+      <Label layoutX="140.0" layoutY="41.0" text="View Teachers Details" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

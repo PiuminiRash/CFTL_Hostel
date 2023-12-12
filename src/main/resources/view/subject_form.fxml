@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" prefHeight="586.0" prefWidth="1510.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.SubjectController">
+   <children>
+      <ImageView fitHeight="586.0" fitWidth="1510.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assests/gradient_4_16.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="rootNode" layoutY="70.0" prefHeight="506.0" prefWidth="1278.0" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0" />
+      <JFXButton fx:id="ViewSubject" layoutX="10.0" layoutY="155.0" onAction="#btnViewSubjectOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="View Subject Details" AnchorPane.bottomAnchor="371.0" AnchorPane.leftAnchor="10.0" />
+      <JFXButton fx:id="TimeTable" layoutX="10.0" layoutY="246.0" onAction="#btnTimeTableOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="Time Table" AnchorPane.leftAnchor="10.0" />
+      <JFXButton fx:id="ManageSubject" layoutX="10.0" layoutY="70.0" onAction="#btnManageSubjectOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="Add New Subject" AnchorPane.bottomAnchor="456.0" AnchorPane.leftAnchor="10.0" />
+      <JFXButton fx:id="SubjectStudent" layoutX="10.0" layoutY="323.0" onAction="#btnSubjectStudentOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="Subject Students" AnchorPane.bottomAnchor="213.0" AnchorPane.leftAnchor="10.0" />
+      <ImageView fitHeight="182.0" fitWidth="189.0" layoutX="10.0" layoutY="394.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assests/Subjectwall.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="506.0" prefWidth="1278.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.SubjectTimeTableController">
+   <children>
+      <ImageView fitHeight="506.0" fitWidth="1278.0" layoutX="1.0" layoutY="-12.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../assests/gradient_4_16.jpg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="tblTimeTable" layoutX="40.0" layoutY="67.0" prefHeight="411.0" prefWidth="893.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0">
+        <columns>
+          <TableColumn fx:id="colSection" prefWidth="95.0" text="Section" />
+          <TableColumn fx:id="colMon" prefWidth="109.0" text="Mon" />
+            <TableColumn fx:id="colThue" prefWidth="118.0" text="Thue" />
+            <TableColumn fx:id="colWen" prefWidth="110.0" text="Wen" />
+            <TableColumn fx:id="colTue" prefWidth="115.0" text="Tue" />
+            <TableColumn fx:id="colFri" prefWidth="113.0" text="Fri" />
+            <TableColumn fx:id="colSat" prefWidth="115.0" text="Sat" />
+            <TableColumn fx:id="colSun" prefWidth="117.0" text="Sun" />
+        </columns>
+      </TableView>
+      <AnchorPane layoutX="930.0" layoutY="40.0" prefHeight="444.0" prefWidth="324.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="114.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="0.0">
+               <image>
+                  <Image url="@../assests/Subjectwall.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="58.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update To Time Table">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="14.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Section :" />
+            <Text layoutX="14.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject :" />
+            <Text layoutX="14.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date :" AnchorPane.leftAnchor="14.0" />
+            <JFXButton layoutX="132.0" layoutY="399.0" onAction="#btnAddOnAction" text="Add" />
+            <JFXComboBox fx:id="cmbSection" layoutX="24.0" layoutY="83.0" onAction="#cmbSectionOnAction" prefHeight="31.0" prefWidth="194.0" promptText="Select Section" AnchorPane.leftAnchor="20.0" />
+            <JFXComboBox fx:id="cmbSubject" layoutX="24.0" layoutY="175.0" prefHeight="31.0" prefWidth="194.0" promptText="Select Subject" AnchorPane.leftAnchor="20.0" />
+            <JFXComboBox fx:id="cmbDay" layoutX="20.0" layoutY="274.0" prefHeight="31.0" prefWidth="136.0" promptText="Select Day" AnchorPane.leftAnchor="20.0" />
+         </children>
+      </AnchorPane>
+      <Text layoutX="43.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time Table Manage" AnchorPane.leftAnchor="20.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
