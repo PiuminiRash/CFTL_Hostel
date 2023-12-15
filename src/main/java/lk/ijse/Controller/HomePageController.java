@@ -50,8 +50,8 @@ public class HomePageController {
     private TableColumn<?, ?> colSun;
 
     public void initialize() {
-        setCellValueFactory();
-        loadTimeTable();
+        //setCellValueFactory();
+        //loadTimeTable();
 
         try {
             orderChart();
@@ -83,43 +83,43 @@ public class HomePageController {
         }
     }
 
-    private void setCellValueFactory() {
-        colSection.setCellValueFactory(new PropertyValueFactory<>("section"));
-        colMon.setCellValueFactory(new PropertyValueFactory<>("mon"));
-        colThue.setCellValueFactory(new PropertyValueFactory<>("thu"));
-        colWen.setCellValueFactory(new PropertyValueFactory<>("wen"));
-        colTue.setCellValueFactory(new PropertyValueFactory<>("tue"));
-        colFri.setCellValueFactory(new PropertyValueFactory<>("fri"));
-        colSat.setCellValueFactory(new PropertyValueFactory<>("sat"));
-        colSun.setCellValueFactory(new PropertyValueFactory<>("sun"));
-    }
+//    private void setCellValueFactory() {
+//        colSection.setCellValueFactory(new PropertyValueFactory<>("section"));
+//        colMon.setCellValueFactory(new PropertyValueFactory<>("mon"));
+//        colThue.setCellValueFactory(new PropertyValueFactory<>("thu"));
+//        colWen.setCellValueFactory(new PropertyValueFactory<>("wen"));
+//        colTue.setCellValueFactory(new PropertyValueFactory<>("tue"));
+//        colFri.setCellValueFactory(new PropertyValueFactory<>("fri"));
+//        colSat.setCellValueFactory(new PropertyValueFactory<>("sat"));
+//        colSun.setCellValueFactory(new PropertyValueFactory<>("sun"));
+//    }
 
     private void loadTimeTable(){
-        var model = new TeacherModel();
-
-        ObservableList<TimeTableTm> obList = FXCollections.observableArrayList();
-
-        try {
-            List<TimeTableDto> dtoList = TimeTableModel.getTimeTable();
-
-            for (TimeTableDto dto : dtoList) {
-                obList.add(
-                        new TimeTableTm(
-                                dto.getSection(),
-                                dto.getMon(),
-                                dto.getThu(),
-                                dto.getWen(),
-                                dto.getThu(),
-                                dto.getFri(),
-                                dto.getSat(),
-                                dto.getSun()
-                        )
-                );
-            }
-
-            tblTimeTable.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        var model = new TeacherModel();
+//
+//        ObservableList<TimeTableTm> obList = FXCollections.observableArrayList();
+//
+//        try {
+//            List<TimeTableDto> dtoList = TimeTableModel.getTimeTable();
+//
+//            for (TimeTableDto dto : dtoList) {
+//                obList.add(
+//                        new TimeTableTm(
+//                                dto.getSection(),
+//                                dto.getMon(),
+//                                dto.getThu(),
+//                                dto.getWen(),
+//                                dto.getThu(),
+//                                dto.getFri(),
+//                                dto.getSat(),
+//                                dto.getSun()
+//                        )
+//                );
+//            }
+//
+//            tblTimeTable.setItems(obList);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }

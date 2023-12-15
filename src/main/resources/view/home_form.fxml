@@ -3,19 +3,18 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.StackedBarChart?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane fx:id="root" prefHeight="586.0" prefWidth="1510.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.HomePageController">
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="root" minWidth="993.0" prefHeight="683.0" prefWidth="1012.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.HomePageController">
    <children>
-      <ImageView fitHeight="586.0" fitWidth="1510.0" layoutY="2.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="687.0" fitWidth="1012.0" layoutY="2.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../assests/gradient_4_16.jpg" />
          </image>
       </ImageView>
-      <StackedBarChart fx:id="barChart" layoutX="26.0" layoutY="77.0" prefHeight="496.0" prefWidth="608.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="26.0">
+      <StackedBarChart fx:id="barChart" layoutX="38.0" layoutY="52.0" prefHeight="633.0" prefWidth="925.0" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="38.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>
@@ -23,38 +22,5 @@
           <NumberAxis side="LEFT" />
         </yAxis>
       </StackedBarChart>
-      <AnchorPane layoutX="717.0" layoutY="63.0" prefHeight="372.0" prefWidth="744.0" AnchorPane.bottomAnchor="151.0" AnchorPane.rightAnchor="49.0">
-         <children>
-            <Label layoutX="233.0" layoutY="14.0" text="LearningTime Table">
-               <font>
-                  <Font name="System Bold" size="30.0" />
-               </font>
-            </Label>
-            <TableView fx:id="tblTimeTable" layoutX="27.0" layoutY="89.0" opacity="0.63" prefHeight="236.0" prefWidth="691.0">
-               <columns>
-                  <TableColumn fx:id="colSection" minWidth="20.0" prefWidth="79.0" text="Section" />
-                  <TableColumn fx:id="colMon" minWidth="20.0" prefWidth="85.0" text="Mon" />
-                  <TableColumn fx:id="colThue" minWidth="20.0" prefWidth="88.0" text="Thue" />
-                  <TableColumn fx:id="colWen" minWidth="20.0" prefWidth="87.0" text="Wen" />
-                  <TableColumn fx:id="colTue" minWidth="20.0" prefWidth="88.0" text="Tue" />
-                  <TableColumn fx:id="colFri" minWidth="20.0" prefWidth="81.0" text="Fri" />
-                  <TableColumn fx:id="colSat" minWidth="20.0" prefWidth="97.0" text="Sat" />
-                  <TableColumn fx:id="colSun" minWidth="20.0" prefWidth="85.0" resizable="false" text="Sun" />
-               </columns>
-            </TableView>
-         </children>
-      </AnchorPane>
-      <Separator layoutX="669.0" layoutY="117.0" orientation="VERTICAL" prefHeight="433.0" prefWidth="10.0" />
-      <AnchorPane layoutX="1179.0" layoutY="448.0" opacity="0.68" prefHeight="124.0" prefWidth="317.0" style="-fx-background-color: blue; -fx-background-color: 50;">
-         <children>
-            <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" />
-            <Text layoutX="14.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact No :" />
-            <Text layoutX="14.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address :" />
-            <Text layoutX="120.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="piuminirashmika@gmail.com" />
-            <Text layoutX="120.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="no 26 Baththaramulla" />
-            <Text layoutX="120.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0766433312" />
-         </children>
-      </AnchorPane>
-      <TextField layoutX="26.0" layoutY="14.0" promptText="search" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

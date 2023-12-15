@@ -66,15 +66,15 @@ public class DashBordController {
     }
 
     public void btnEmployeeOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/employeepage_form.fxml");
+        //setForms("/view/employeepage_form.fxml");
     }
 
     public void btnTeacherOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/teacher_form.fxml");
+        //setForms("/view/teacher_form.fxml");
     }
 
     public void btnStudentOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/student_form.fxml");
+        //setForms("/view/student_form.fxml");
     }
 
     public void btnHomeOnAction(ActionEvent actionEvent) throws IOException {
@@ -82,19 +82,19 @@ public class DashBordController {
     }
 
     public void btnRoomOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/room_form.fxml");
+        //setForms("/view/room_form.fxml");
     }
 
     public void btnIncomeOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/income_form.fxml");
+        //setForms("/view/income_form.fxml");
     }
 
     public void btnSubjectOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/subject_form.fxml");
+        //setForms("/view/subject_form.fxml");
     }
 
     public void btnAccountOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/account_form.fxml");
+        //setForms("/view/account_form.fxml");
     }
 
     public void btnLogoutOnAction(ActionEvent actionEvent) throws IOException {
