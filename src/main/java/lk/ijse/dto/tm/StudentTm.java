@@ -14,16 +14,21 @@ public class StudentTm {
     private String StudentName;
     private String StudentAddress;
     private String Section;
-    private Button UpdateBtn;
+    private String RoomNo;
     private Button DeleteBtn;
 
-    public StudentTm (String studentId, String studentName,String studentAddress,String section, javafx.scene.control.Button update,javafx.scene.control.Button delete) {
+    public StudentTm (String studentId, String studentName,String studentAddress,String section, javafx.scene.control.Button delete) {
         this.StudentId = studentId;
         this.StudentName = studentName;
         this.StudentAddress = studentAddress;
         this.Section = section;
-        this.UpdateBtn = update;
         this.DeleteBtn = delete;
+    }
+
+    public StudentTm(String StudentId,String StudentName,Button DeleteBtn){
+        this.StudentId = StudentId;
+        this.StudentName = StudentName;
+        this.DeleteBtn = DeleteBtn;
     }
 }
 

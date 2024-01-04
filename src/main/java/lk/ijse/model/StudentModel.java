@@ -2,7 +2,6 @@ package lk.ijse.model;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.StudentDto;
-import lk.ijse.dto.SubjectDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,9 +24,9 @@ public class StudentModel {
         return splitStudentId(null);
     }
 
-    private String splitStudentId(String currentOrderId) {
-        if(currentOrderId != null) {
-            String[] split = currentOrderId.split("S");
+    private String splitStudentId(String currentStudentId) {
+        if(currentStudentId != null) {
+            String[] split = currentStudentId.split("S");
 
             int id = Integer.parseInt(split[1]);
             id++;
@@ -39,7 +38,7 @@ public class StudentModel {
 
     public static boolean saveStudent(StudentDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-        String sql = "INSERT INTO Student Values (?,?,?,?,?,?,?) ";
+        String sql = "INSERT INTO Student VALUES (?, ?, ?, ?, ?, ?, ? , ?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
 
         pstm.setString(1, dto.getStudentId());
@@ -49,12 +48,13 @@ public class StudentModel {
         pstm.setString(5, dto.getBucket01());
         pstm.setString(6, dto.getBucket02());
         pstm.setString(7, dto.getBucket03());
+        pstm.setString(8, dto.getRoomNo());
 
-        return pstm.executeUpdate() < 0;
-
+        int rowsAffected = pstm.executeUpdate();
+        return rowsAffected > 0;
     }
 
-   public static List<StudentDto> getAllStudent() throws SQLException {
+    public List<StudentDto> getAllStudent() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT * FROM Student";
@@ -72,14 +72,15 @@ public class StudentModel {
                             resultSet.getString(4),
                             resultSet.getString(5),
                             resultSet.getString(6),
-                            resultSet.getString(7)
+                            resultSet.getString(7),
+                            resultSet.getString(8)
                     )
             );
         }
         return dtoList;
     }
 
-    public static boolean deleteStudent(String id) throws SQLException {
+    public boolean deleteStudent(String id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "DELETE FROM Student WHERE  StudentId= ?";
@@ -90,10 +91,10 @@ public class StudentModel {
         return pstm.executeUpdate() > 0;
     }
 
-    public static boolean updateStudent(StudentDto dto) throws SQLException {
+    public boolean updateStudent(StudentDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
-        String sql = "UPDATE Student SET StudentName = ?, Address = ?, Section = ?, Bucket1 = ?, Bucket2 = ?, Bucket3 = ? WHERE StudentId = ?";
+        String sql = "UPDATE Student SET StudentName = ?, Address = ?, Section = ? ,Bucket1 =? ,Bucket2 = ? , Bucket3 = ? , RoomNo = ? WHERE StudentId = ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
 
         pstm.setString(1, dto.getStudentName());
@@ -102,12 +103,13 @@ public class StudentModel {
         pstm.setString(4, dto.getBucket01());
         pstm.setString(5, dto.getBucket02());
         pstm.setString(6, dto.getBucket03());
-        pstm.setString(7, dto.getStudentId());
+        pstm.setString(7, dto.getRoomNo());
+        pstm.setString(8, dto.getStudentId());
 
         return pstm.executeUpdate() > 0;
     }
 
-    public static StudentDto searchStudent(String id) throws SQLException {
+    public StudentDto searchStudent(String id) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection ();
 
         String sql = "SELECT * FROM Student WHERE StudentId = ?";
@@ -125,10 +127,28 @@ public class StudentModel {
             String bucket1 = resultSet.getString(5);
             String bucket2 = resultSet.getString(6);
             String bucket3 = resultSet.getString(7);
+            String roomNo = resultSet.getString(8);
 
-            dto = new StudentDto(id,name,address,section,bucket1,bucket2,bucket3);
+
+            dto = new StudentDto(id,name,address,section,bucket1,bucket2,bucket3,roomNo);
         }
         return dto;
+    }
+
+    public int getCount(String roomNo) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT COUNT(*) AS StudentCount FROM Student WHERE RoomNo = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setString(1, roomNo);
+
+            try (ResultSet resultSet = pstm.executeQuery()) {
+                if (resultSet.next()) {
+                    int studentCount = resultSet.getInt("StudentCount");
+                    return studentCount;
+                }
+            }
+        }
+        return 0;
     }
 }
 

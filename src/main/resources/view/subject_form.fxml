@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" prefHeight="586.0" prefWidth="1510.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.SubjectController">
+<AnchorPane fx:id="root" prefHeight="687.0" prefWidth="1012.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.SubjectController">
    <children>
-      <ImageView fitHeight="586.0" fitWidth="1510.0" layoutX="5.0" layoutY="5.0" pickOnBounds="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="687.0" fitWidth="1012.0" pickOnBounds="true">
          <image>
             <Image url="@../assests/gradient_4_16.jpg" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="rootNode" layoutY="70.0" prefHeight="506.0" prefWidth="1278.0" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0" />
-      <JFXButton fx:id="ViewSubject" layoutX="10.0" layoutY="155.0" onAction="#btnViewSubjectOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="View Subject Details" AnchorPane.bottomAnchor="371.0" AnchorPane.leftAnchor="10.0" />
-      <JFXButton fx:id="TimeTable" layoutX="10.0" layoutY="246.0" onAction="#btnTimeTableOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="Time Table" AnchorPane.leftAnchor="10.0" />
-      <JFXButton fx:id="ManageSubject" layoutX="10.0" layoutY="70.0" onAction="#btnManageSubjectOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="Add New Subject" AnchorPane.bottomAnchor="456.0" AnchorPane.leftAnchor="10.0" />
-      <JFXButton fx:id="SubjectStudent" layoutX="10.0" layoutY="323.0" onAction="#btnSubjectStudentOnAction" prefHeight="50.0" prefWidth="162.0" style="-fx-background-color: black;" text="Subject Students" AnchorPane.bottomAnchor="213.0" AnchorPane.leftAnchor="10.0" />
-      <ImageView fitHeight="182.0" fitWidth="189.0" layoutX="10.0" layoutY="394.0" pickOnBounds="true">
-         <image>
-            <Image url="@../assests/Subjectwall.png" />
-         </image>
-      </ImageView>
+      <Text layoutX="375.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Section Details Manage" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Text>
+      <TableView fx:id="tblSubjectDetails" layoutX="42.0" layoutY="112.0" prefHeight="550.0" prefWidth="952.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+         <columns>
+            <TableColumn fx:id="colSubjectId" prefWidth="98.0" text="Subject Id" />
+            <TableColumn fx:id="colSubjectName" prefWidth="303.0" text="Subject Name" />
+            <TableColumn fx:id="colBucket" prefWidth="262.0" text="Bucket" />
+            <TableColumn fx:id="colStudentCount" prefWidth="137.0" text="Student Count" />
+            <TableColumn fx:id="colDelete" prefWidth="151.0" text="Delete" />
+         </columns>
+      </TableView>
+      <TextField layoutX="30.0" layoutY="60.0" onAction="#txtSubjectOnAction" onDragDetected="#txtSearchSection" promptText=" Search Subject" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

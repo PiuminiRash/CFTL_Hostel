@@ -24,6 +24,15 @@ CREATE TABLE Employee(
                          CONSTRAINT FOREIGN KEY (JobCode) REFERENCES JobType(Jobcode) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+CREATE TABLE Staff(
+                      StaffType VARCHAR(100) NOT NULL ,
+                      StaffId VARCHAR(100) PRIMARY KEY ,
+                      StaffName VARCHAR(200) NOT NULL ,
+                      ContactNo INT (10) NOT NULL ,
+                      NIC VARCHAR(200) NOT NULL ,
+                      Email VARCHAR(200) NOT NULL
+);
+
 CREATE TABLE Teacher(
                         TeacherId VARCHAR(100)PRIMARY KEY ,
                         TeacherName VARCHAR(200),
@@ -61,8 +70,7 @@ CREATE TABLE Expenditure (
 CREATE TABLE Room(
                      RoomNo VARCHAR(100) PRIMARY KEY ,
                      RoomName VARCHAR(100) NOT NULL ,
-                     NoOfBeds INT NOT NULL ,
-                     StudentCount INT NOT NULL
+                     NoOfBeds INT NOT NULL
 );
 
 CREATE TABLE Timetable(
@@ -105,7 +113,17 @@ CREATE TABLE Student(
                         Bucket1 VARCHAR(200),
                         Bucket2 VARCHAR(200),
                         Bucket3 VARCHAR(200),
-                        CONSTRAINT FOREIGN KEY (Section) REFERENCES Section(SectionName) ON DELETE CASCADE ON UPDATE CASCADE
+                        RoomNo VARCHAR(100),
+                        CONSTRAINT FOREIGN KEY (Section) REFERENCES Section(SectionName) ON DELETE CASCADE ON UPDATE CASCADE,
+                        CONSTRAINT FOREIGN KEY (RoomNo) REFERENCES Room(RoomNo) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE Gardian(
+                             StudentId VARCHAR (100) ,
+                             GardianName VARCHAR(200) NOT NULL ,
+                             Email VARCHAR(300) NOT NULL ,
+                             ContactNo VARCHAR(10) NOT NULL ,
+                             CONSTRAINT FOREIGN KEY (StudentId) REFERENCES Student (StudentId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Payment (

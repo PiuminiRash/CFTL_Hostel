@@ -57,8 +57,9 @@ public class SubjectTimeTableController {
     @FXML
     private JFXComboBox<String> cmbDay;
 
-    private ObservableList<TimeTableTm> obList = FXCollections.observableArrayList();
+    private SectionModel sectionModel = new SectionModel();
 
+    private ObservableList<TimeTableTm> obList = FXCollections.observableArrayList();
 
     public void initialize() {
         loadSection();
@@ -108,7 +109,7 @@ public class SubjectTimeTableController {
     private void loadSection() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<SectionsDto> sectionsDtos = SectionModel.getAllSections();
+            List<SectionsDto> sectionsDtos = sectionModel.getAllSections();
 
             for (SectionsDto dto : sectionsDtos) {
                 obList.add(dto.getSectionName());

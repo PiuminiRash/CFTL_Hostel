@@ -17,4 +17,5 @@ public class StudentDto {
     private String Bucket01;
     private String Bucket02;
     private String Bucket03;
+    private String RoomNo;
 }

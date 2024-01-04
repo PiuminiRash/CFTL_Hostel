@@ -35,6 +35,8 @@ public class SubjectStudentController {
     @FXML
     private TableColumn<?, ?> colBucket3;
 
+    private StudentModel studentModel = new StudentModel();
+
     public void initialize(){
         setCellValueFactory();
         loadAllStudent();
@@ -55,7 +57,7 @@ public class SubjectStudentController {
         ObservableList<SubjectStudentTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<StudentDto> dtoList = StudentModel.getAllStudent();
+            List<StudentDto> dtoList = studentModel.getAllStudent();
 
             for (StudentDto dto : dtoList) {
                 obList.add(

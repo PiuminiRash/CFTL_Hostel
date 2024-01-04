@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="rootNode" minHeight="477.0" minWidth="980.0" prefHeight="687.0" prefWidth="1012.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.StudentManageController">
+    <children>
+        <ImageView fitHeight="687.0" fitWidth="1012.0" layoutX="14.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <image>
+                <Image url="@../assests/gradient_4_16.jpg" />
+            </image>
+        </ImageView>
+        <ImageView fitHeight="338.0" fitWidth="366.0" layoutX="632.0" layoutY="376.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="376.0">
+            <image>
+                <Image url="@../assests/studentwall-removebg-preview.png" />
+            </image>
+        </ImageView>
+        <Text layoutX="30.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Id : " AnchorPane.leftAnchor="30.0" />
+        <JFXTextField fx:id="txtStudentName" focusColor="BLACK" layoutX="30.0" layoutY="220.0" prefHeight="31.0" prefWidth="218.0" promptText="Enter Name" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="220.0">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor></JFXTextField>
+        <JFXTextField fx:id="txtStudentId" focusColor="BLACK" layoutX="30.0" layoutY="110.0" prefHeight="31.0" prefWidth="218.0" promptText="Enter Id" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="110.0">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor></JFXTextField>
+        <Text layoutX="38.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address : " AnchorPane.leftAnchor="30.0" />
+        <JFXComboBox fx:id="cmbSection" focusColor="BLACK" layoutX="30.0" layoutY="444.0" onAction="#cmbSectionAction" prefHeight="31.0" prefWidth="218.0" promptText="Select learning Section" AnchorPane.leftAnchor="30.0">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor></JFXComboBox>
+        <JFXComboBox fx:id="cmbBucket01" focusColor="BLACK" layoutX="29.0" layoutY="549.0" prefHeight="31.0" prefWidth="162.0" promptText="Bucket 01 :" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="29.0">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor></JFXComboBox>
+        <JFXComboBox fx:id="cmbBucket03" focusColor="BLACK" layoutX="406.0" layoutY="549.0" prefHeight="31.0" prefWidth="162.0" promptText="Bucket 03 :" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="406.0">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor></JFXComboBox>
+        <Text layoutX="29.0" layoutY="532.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject Select :" AnchorPane.leftAnchor="29.0" />
+        <JFXButton fx:id="btnSave" layoutX="563.0" layoutY="604.0" onAction="#btnSaveOnAction" style="-fx-background-color: white;" text="Next" AnchorPane.bottomAnchor="52.0" />
+        <Text layoutX="29.0" layoutY="424.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Section :" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="408.0" />
+        <Label layoutX="163.0" layoutY="57.0" text="Manage Student" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <Text layoutX="23.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Name  : " AnchorPane.leftAnchor="30.0" />
+        <JFXTextField fx:id="txtAddress" focusColor="BLACK" layoutX="30.0" layoutY="333.0" prefHeight="31.0" prefWidth="218.0" promptText="Enter Address" AnchorPane.leftAnchor="30.0">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor>
+        </JFXTextField>
+        <JFXComboBox fx:id="cmbBucket02" focusColor="BLACK" layoutX="203.0" layoutY="549.0" prefHeight="31.0" prefWidth="162.0" promptText="Bucket 02 :">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor>
+        </JFXComboBox>
+        <Separator layoutX="586.0" layoutY="77.0" orientation="VERTICAL" prefHeight="382.0" prefWidth="0.0" />
+        <Text layoutX="665.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gardian Name :" />
+        <JFXTextField fx:id="txtStudentName1" focusColor="BLACK" layoutX="665.0" layoutY="110.0" prefHeight="31.0" prefWidth="218.0" promptText="Enter Name">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor>
+        </JFXTextField>
+        <Text layoutX="665.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email :" />
+        <Text layoutX="664.0" layoutY="298.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact No  :" />
+        <JFXTextField fx:id="txtStudentName2" focusColor="BLACK" layoutX="665.0" layoutY="220.0" prefHeight="31.0" prefWidth="218.0" promptText="Enter Email">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor>
+        </JFXTextField>
+        <JFXTextField fx:id="txtStudentName21" focusColor="BLACK" layoutX="665.0" layoutY="313.0" prefHeight="31.0" prefWidth="218.0" promptText="Enter Contact No">
+            <unFocusColor>
+                <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                    <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="WHITE" offset="1.0" />
+                    </stops>
+                </RadialGradient>
+            </unFocusColor>
+        </JFXTextField>
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="353.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="339.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true" />
+    </children>
+</AnchorPane>

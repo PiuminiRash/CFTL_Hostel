@@ -6,14 +6,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.RoomDto;
+import lk.ijse.dto.StudentDto;
 import lk.ijse.dto.tm.RoomTm;
 import lk.ijse.model.RoomModel;
+import lk.ijse.model.StudentModel;
 import org.controlsfx.control.Notifications;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +46,7 @@ public class RoomController  {
     private TableColumn<?, ?> colAction;
 
     @FXML
-    private TableColumn<?, ?> colCompetence;
+    private TableColumn<?, ?> colStatus;
 
     @FXML
     private AnchorPane root1;
@@ -57,43 +61,53 @@ public class RoomController  {
     private JFXTextField txtNoOfBed;
 
     @FXML
-    private JFXButton SaveRoom;
-
-    @FXML
-    private JFXTextField txtStudentCount;
-
-    @FXML
     private JFXButton UpdateRoom;
 
     private RoomModel roomModel = new RoomModel();
+
+    private StudentModel studentModel = new StudentModel();
 
     private ObservableList<RoomTm> obList = FXCollections.observableArrayList();
 
     public void initialize() {
         setCellValueFactory();
         loadAllRoomDetails();
-        tableListener();
         generateNextRoomNo();
+
+        tblRoomDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                openRoomDetails(newValue.getRoomNo());
+            }
+        });
     }
 
-    private void tableListener() {
-        tblRoomDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValued, newValue) -> {
+    private void openRoomDetails(String roomNo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/roommanage_form.fxml"));
+            AnchorPane RoomManagePane = loader.load();
 
-            setData(newValue);
-        });
+            RoomManageController roomManageController = loader.getController();
+
+            roomManageController.loadRoom(roomNo);
+
+            root.getChildren().clear();
+            root.getChildren().add(RoomManagePane);
+        } catch (IOException e) {
+
+        }
     }
 
     private void setData(RoomTm row) {
         txtRoomNo.setText(row.getRoomNo());
         txtRoomName.setText(row.getRoomName());
         txtNoOfBed.setText(String.valueOf(row.getNoOfBed()));
-        txtStudentCount.setText(String.valueOf(row.getStudentCount()));
+        //txtStudentCount.setText(String.valueOf(row.getStudentCount()));
     }
 
     private void generateNextRoomNo() {
         try {
-            String orderId = RoomModel.generateNextRoomNo();
-            txtRoomNo.setText(orderId);
+            String roomNo = roomModel.generateNextRoomNo();
+            txtRoomNo.setText(roomNo);
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
@@ -105,7 +119,7 @@ public class RoomController  {
         colNoOfBed.setCellValueFactory(new PropertyValueFactory<>("NoOfBed"));
         colStudentCount.setCellValueFactory(new PropertyValueFactory<>("StudentCount"));
         colAction.setCellValueFactory(new  PropertyValueFactory<>("Delete"));
-        colCompetence.setCellValueFactory(new PropertyValueFactory<>("Complete"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("Complete"));
     }
 
     private void loadAllRoomDetails() {
@@ -118,8 +132,12 @@ public class RoomController  {
                 Button deleteBtn = new Button("Delete");
                 setDeleteButtonOnAction(deleteBtn,dto.getRoomNo());
 
+                String room = dto.getRoomNo();
+
+                int count = studentModel.getCount(room);
+
                 String status = "Incomplete";
-                if (dto.getStudentCount() == dto.getNoOfBed()) {
+                if (dto.getNoOfBed() == count) {
                     status = "Complete";
                 }
                 obList.add(
@@ -127,7 +145,7 @@ public class RoomController  {
                                 dto.getRoomNo(),
                                 dto.getRoomName(),
                                 dto.getNoOfBed(),
-                                dto.getStudentCount(),
+                                count,
                                 deleteBtn,
                                 status
                         )
@@ -174,14 +192,14 @@ public class RoomController  {
         String room_no = txtRoomNo.getText();
         String room_name = txtRoomName.getText();
         int no_of_beds = Integer.parseInt(txtNoOfBed.getText());
-        int student_count = Integer.parseInt(txtStudentCount.getText());
+        //int student_count = Integer.parseInt(txtStudentCount.getText());
 
 
         try{
             if (!validateRoom()){
                 return;
             }
-            var dto = new RoomDto(room_no,room_name,no_of_beds,student_count);
+            var dto = new RoomDto(room_no,room_name,no_of_beds);
             boolean isSaved = roomModel.saveRoom(dto);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"room saved").show();
@@ -191,40 +209,15 @@ public class RoomController  {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
         obList.clear();
-        generateNextRoomNo();
-        loadAllRoomDetails();
+        //generateNextRoomNo();
+        //loadAllRoomDetails();
     }
 
     private void clearFields() {
         txtRoomNo.setText("");
         txtRoomName.setText("");
         txtNoOfBed.setText("");
-        txtStudentCount.setText("");
-    }
-
-    public void btnUpdateRoomOnAction(ActionEvent actionEvent) {
-        String room_no = txtRoomNo.getText();
-        String room_name = txtRoomName.getText();
-        int no_of_beds = Integer.parseInt(txtNoOfBed.getText());
-        int student_count = Integer.parseInt(txtStudentCount.getText());
-
-
-        try{
-            if (!validateRoom()){
-                return;
-            }
-            var dto = new RoomDto(room_no,room_name,no_of_beds,student_count);
-            boolean isSaved = roomModel.updateRoom(dto);
-            if (isSaved){
-                new Alert(Alert.AlertType.CONFIRMATION,"room Update").show();
-                clearFields();
-            }
-        }catch (SQLException e){
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
-        obList.clear();
-        generateNextRoomNo();
-        loadAllRoomDetails();
+        //txtStudentCount.setText("");
     }
 
     private boolean validateRoom() {
@@ -244,11 +237,11 @@ public class RoomController  {
             showErrorNotification("Invalid count", "The beds count you entered is invalid");
             isValidate = false;
         }
-        boolean count = Pattern.matches("[0-9]{1,}",txtStudentCount.getText());
-        if (!beds){
-            showErrorNotification("Invalid count", "The student count you entered is invalid");
-            isValidate = false;
-        }
+//        boolean count = Pattern.matches("[0-9]{1,}",txtStudentCount.getText());
+//        if (!beds){
+//            showErrorNotification("Invalid count", "The student count you entered is invalid");
+//            isValidate = false;
+//        }
         return isValidate;
     }
 
@@ -259,5 +252,8 @@ public class RoomController  {
                 .showError();
 
 
+    }
+
+    public void txtSearchRoomOnAction(ActionEvent actionEvent) {
     }
 }

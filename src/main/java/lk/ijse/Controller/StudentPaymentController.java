@@ -26,6 +26,9 @@ import java.time.Month;
 import java.util.List;
 
 public class StudentPaymentController {
+  /*  @FXML
+    private AnchorPane root;
+
     @FXML
     private JFXTextField txtAmount;
 
@@ -77,23 +80,25 @@ public class StudentPaymentController {
 
     private String month;
 
+    StudentModel studentModel = new StudentModel();
+
     private ObservableList<PaymentTm> obList = FXCollections.observableArrayList();
 
     public void initialize() {
-        dateDate.setPromptText(String.valueOf(LocalDate.now()));
-
-        setMonth();
-
-        System.out.println("Selected Month: " + cmbMonth.getValue());
-
-        if (cmbMonth.getValue() != null) {
-            month = cmbMonth.getValue().toString(); // Use toString() to get the month name
-        }
-
-
-        loadStudent();
-        setCellValueFactory();
-        loadAllPayment();
+//        dateDate.setPromptText(String.valueOf(LocalDate.now()));
+//
+//        setMonth();
+//
+//        System.out.println("Selected Month: " + cmbMonth.getValue());
+//
+//        if (cmbMonth.getValue() != null) {
+//            month = cmbMonth.getValue().toString(); // Use toString() to get the month name
+//        }
+//
+//
+//        loadStudent();
+//        setCellValueFactory();
+//        loadAllPayment();
     }
 
     public void setMonth() {
@@ -101,13 +106,6 @@ public class StudentPaymentController {
         cmbMonth.setItems(months);
 
         cmbMonth.setPromptText("Select a month");
-    }
-
-    private void setCellValueFactory(){
-        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        colStudentId.setCellValueFactory(new PropertyValueFactory<>("studentId"));
-        colStudentName.setCellValueFactory(new PropertyValueFactory<>("studentName"));
-        colPayAmount.setCellValueFactory(new PropertyValueFactory<>("amt"));
     }
 
     private void loadAllPayment() {
@@ -157,14 +155,11 @@ public class StudentPaymentController {
        GoIncome();
     }
 
-    public void btnReportOnAction(ActionEvent actionEvent) {
-    }
-
     public void cmbStudentIdOnAction(ActionEvent actionEvent) {
         String id = cmbStudentId.getValue();
 
         try {
-            StudentDto studentDto = StudentModel.searchStudent(id);
+            StudentDto studentDto = studentModel.searchStudent(id);
             lblStudentName.setText(studentDto.getStudentName());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -172,30 +167,6 @@ public class StudentPaymentController {
     }
 
     public void cmbMonthOnAction(ActionEvent actionEvent) {
-        /*try {
-            Month selectedMonth = cmbMonth.getValue();
-            System.out.println("Selected Month: " + selectedMonth);
-
-            if (selectedMonth != null) {
-                month = selectedMonth.name();
-                System.out.println("Selected Month (name): " + month);
-
-                // Clear the existing items in the observable list
-                obList.clear();
-
-                // Fetch payments for the selected month
-                List<PaymentTm> dtoList = PaymentModel.searchPayment(month);
-
-                for (PaymentTm dto : dtoList) {
-                    obList.add(new PaymentTm(dto.getDate(), dto.getStudentId(), dto.getStudentName(), dto.getAmt()));
-                }
-
-                // Set the items in the table view
-                payment.setItems(obList);
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }*/
         try {
             Month selectedMonth = cmbMonth.getValue();
             if (selectedMonth != null) {
@@ -220,14 +191,10 @@ public class StudentPaymentController {
         }
     }
 
-
-    public void btnPrintOnAction(ActionEvent actionEvent) {
-    }
-
     private void loadStudent() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<StudentDto> studentDtos = StudentModel.getAllStudent();
+            List<StudentDto> studentDtos = studentModel.getAllStudent();
 
             for (StudentDto dto : studentDtos) {
                 obList.add(dto.getStudentId());
@@ -252,6 +219,74 @@ public class StudentPaymentController {
             if (isSuccess) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Income Payment Save Success!").show();
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }*/
+    @FXML
+    private AnchorPane root;
+
+    @FXML
+    private ListView<?> listPaid;
+
+    @FXML
+    private JFXTextField txtStudentName;
+
+    @FXML
+    private JFXComboBox<String> cmbStudentId;
+
+    @FXML
+    private JFXTextField txtDate;
+
+    @FXML
+    private JFXTextField txtPayment;
+
+    @FXML
+    private JFXComboBox<Month> cmbMonth;
+
+    StudentModel studentModel = new StudentModel();
+
+    private ObservableList<PaymentTm> obList = FXCollections.observableArrayList();
+
+    public void initialize() {
+        txtDate.setPromptText(String.valueOf(LocalDate.now()));
+        setMonth();
+        loadStudent();
+    }
+
+    public void setMonth() {
+        ObservableList<Month> months = FXCollections.observableArrayList(Month.values());
+        cmbMonth.setItems(months);
+
+        cmbMonth.setPromptText("Select a month");
+    }
+
+    @FXML
+    void btnPaymentOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cmbStudentOnAction(ActionEvent event) {
+        String id = cmbStudentId.getValue();
+
+        try {
+            StudentDto studentDto = studentModel.searchStudent(id);
+            txtStudentName.setText(studentDto.getStudentName());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadStudent() {
+        ObservableList<String> obList = FXCollections.observableArrayList();
+        try {
+            List<StudentDto> studentDtos = studentModel.getAllStudent();
+
+            for (StudentDto dto : studentDtos) {
+                obList.add(dto.getStudentId());
+            }
+            cmbStudentId.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

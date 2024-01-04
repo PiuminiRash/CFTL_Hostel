@@ -1,6 +1,7 @@
 package lk.ijse.dto.tm;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import lombok.*;
 
 @AllArgsConstructor

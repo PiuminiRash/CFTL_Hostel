@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SectionModel {
-    public static List<SectionsDto> getAllSections() throws SQLException {
+    public List<SectionsDto> getAllSections() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT * FROM Section";

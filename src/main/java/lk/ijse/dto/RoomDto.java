@@ -12,5 +12,5 @@ public class RoomDto {
     private String RoomNo;
     private String RoomName;
     private int NoOfBed;
-    private int StudentCount;
+    //private int StudentCount;
 }

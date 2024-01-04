@@ -52,6 +52,8 @@ public class AccountController {
     @FXML
     private TableColumn<?, ?> colAction;
 
+    private StudentModel studentModel = new StudentModel();
+
     private ObservableList<UserTm> obList = FXCollections.observableArrayList();
 
     public void initialize() {
@@ -128,7 +130,7 @@ public class AccountController {
 
     private void DeleteStudent(String studentId){
         try {
-            boolean isDeleted = StudentModel.deleteStudent(studentId);
+            boolean isDeleted = studentModel.deleteStudent(studentId);
             if(isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "User deleted!").show();
             } else {
