@@ -270,7 +270,6 @@ public class StudentProfileController {
         String bucket2 = cmbBucket02.getValue();
         String bucket3 = cmbBucket03.getValue();
         String room = txtRoomNo.getText();
-
         try{
 
             var dto = new StudentDto (id,name,address,section,bucket1,bucket2,bucket3,room);
