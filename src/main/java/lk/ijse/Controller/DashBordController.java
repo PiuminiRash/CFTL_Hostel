@@ -58,10 +58,10 @@ public class DashBordController {
     }
 
     void setForms(String forms) throws IOException {
-        String [] formArrays = {"/view/home_form.fxml","/view/viewstudents_form.fxml","/view/staff_form.fxml","/view/room_form.fxml","/view/section_form.fxml","/view/exam_form.fxml","/view/income_form.fxml"
+        String [] formArrays = {"/view/home_form.fxml","/view/viewstudents_form.fxml","/view/staff_form.fxml","/view/room_form.fxml","/view/section_form.fxml"
         };
 
-        JFXButton[] btnArray = {home,student,staff,room,subject,exam,income};
+        JFXButton[] btnArray = {home,student,staff,room,subject};
 
         AnchorPane load = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(forms)));
         root.getChildren().clear();
@@ -99,14 +99,9 @@ public class DashBordController {
         setForms("/view/section_form.fxml");
     }
 
-    public void btnExamOnAction(ActionEvent actionEvent) throws IOException {
-        setForms("/view/exam_form.fxml");
-    }
-
     public void btnIncomeOnAction(ActionEvent actionEvent) throws IOException {
         setForms("/view/income_form.fxml");
     }
-
 
     public void btnLogOutOnAction(ActionEvent actionEvent) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/loginpage_form.fxml"));
@@ -114,6 +109,9 @@ public class DashBordController {
 
         stage.setScene(new Scene(anchorPane));
         stage.centerOnScreen();
+    }
+
+    public void btnExamOnAction(ActionEvent actionEvent) {
     }
 }
 
