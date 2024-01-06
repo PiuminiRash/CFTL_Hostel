@@ -3,8 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,6 +19,11 @@
                 <Image url="@../assests/gradient_4_16.jpg" />
             </image>
         </ImageView>
+      <ImageView fitHeight="530.0" fitWidth="670.0" layoutX="315.0" layoutY="97.0" pickOnBounds="true">
+         <image>
+            <Image url="@../assests/RoomWall-removebg-preview.png" />
+         </image>
+      </ImageView>
         <Text layoutX="99.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Manage Room Details" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
             <font>
                 <Font size="30.0" />
@@ -69,14 +73,8 @@
             </RadialGradient>
          </unFocusColor>
       </JFXTextField>
-      <TableView fx:id="tblRoomStudent" layoutX="44.0" layoutY="429.0" prefHeight="200.0" prefWidth="911.0">
-        <columns>
-          <TableColumn fx:id="colStudentId" prefWidth="99.0" text="Student Id" />
-          <TableColumn fx:id="colStudentName" prefWidth="705.0" text="Student Name " />
-            <TableColumn fx:id="colMove" prefWidth="106.0" text="Move" />
-        </columns>
-      </TableView>
       <Text layoutX="31.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Student List :" />
-      <JFXButton layoutX="880.0" layoutY="390.0" onAction="#btnUpdate" style="-fx-background-color: white;" text="Update " />
+      <JFXButton layoutX="385.0" layoutY="602.0" onAction="#btnUpdate" style="-fx-background-color: white;" text="Update " />
+      <ListView fx:id="listStudentRoom" layoutX="44.0" layoutY="433.0" prefHeight="200.0" prefWidth="230.0" />
     </children>
 </AnchorPane>

@@ -2,8 +2,6 @@ package lk.ijse.dto;
 
 import lombok.*;
 
-import java.time.Month;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -11,9 +9,9 @@ import java.time.Month;
 @ToString
 
 public class PaymentDto {
-    private java.time.Month Month;
+    private String month;
     private String Date;
     private String StudentId;
-    private String StudentName;
+    //private String StudentName;
     private double Amt;
 }

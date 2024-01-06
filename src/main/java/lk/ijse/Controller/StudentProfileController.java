@@ -6,14 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.*;
-import lk.ijse.dto.tm.StudentTm;
 import lk.ijse.model.*;
 import org.controlsfx.control.Notifications;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -59,6 +61,9 @@ public class StudentProfileController {
     private JFXTextField txtRoomNo;
 
     @FXML
+    private ListView<String> listPayment;
+
+    @FXML
     private JFXTextField txtRoomName;
 
     private StudentModel studentModel = new StudentModel();
@@ -69,15 +74,31 @@ public class StudentProfileController {
 
     private SectionModel sectionModel = new SectionModel();
 
-    private ObservableList<StudentTm> obList = FXCollections.observableArrayList();
+    private PaymentModel paymentModel = new PaymentModel();
+
+    private ObservableList<String> obList = FXCollections.observableArrayList();
 
     public void initialize(){
         loadSection();
     }
 
     @FXML
-    void btnRoomDetailsOnAction(ActionEvent event) {
+    void btnRoomDetailsOnAction(ActionEvent event) throws IOException {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/roommanage_form.fxml"));
+            AnchorPane RoomManagePane = loader.load();
 
+            String roomNo = txtRoomNo.getText();
+
+            RoomManageController roomManageController = loader.getController();
+
+            roomManageController.loadRoom(roomNo);
+
+            root.getChildren().clear();
+            root.getChildren().add(RoomManagePane);
+        } catch (IOException e) {
+
+        }
     }
 
     @FXML
@@ -111,6 +132,20 @@ public class StudentProfileController {
 
             RoomDto roomDto = roomModel.searchRoom(roomNo);
             txtRoomName.setText(roomDto.getRoomName());
+
+            try {
+                List<PaymentDto> dtoList = paymentModel.getAllPayment(studentId);
+
+                for (PaymentDto dto : dtoList) {
+                    obList.add(
+                            dto.getMonth()
+                    );
+                }
+
+                listPayment.setItems(obList);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -239,10 +274,12 @@ public class StudentProfileController {
         try{
 
             var dto = new StudentDto (id,name,address,section,bucket1,bucket2,bucket3,room);
-            boolean isUpdate = studentModel.updateStudent(dto);
-
-            if (isUpdate){
-                new Alert(Alert.AlertType.CONFIRMATION,"updated Student").show();
+            boolean isValidate = validateStudent();
+            if (isValidate) {
+                boolean isUpdate = studentModel.updateStudent(dto);
+                if (isUpdate){
+                    new Alert(Alert.AlertType.CONFIRMATION,"updated Student").show();
+                }
             }
         }catch (SQLException e){
             new Alert(Alert.AlertType.ERROR,e.getMessage()).show();

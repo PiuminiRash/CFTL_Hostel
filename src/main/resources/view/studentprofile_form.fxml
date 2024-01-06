@@ -176,7 +176,7 @@
          </unFocusColor>
       </JFXTextField>
       <JFXButton layoutX="851.0" layoutY="217.0" onAction="#btnRoomDetailsOnAction" style="-fx-background-color: white;" text="Full Room Details" />
-      <ListView layoutX="711.0" layoutY="283.0" prefHeight="146.0" prefWidth="255.0" AnchorPane.rightAnchor="46.0" />
+      <ListView fx:id="listPayment" layoutX="711.0" layoutY="283.0" prefHeight="146.0" prefWidth="255.0" AnchorPane.rightAnchor="46.0" />
       <Text layoutX="711.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Details">
          <font>
             <Font size="20.0" />

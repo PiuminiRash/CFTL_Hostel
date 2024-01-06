@@ -150,5 +150,34 @@ public class StudentModel {
         }
         return 0;
     }
+
+    public List<StudentDto> searchRoomStudent(String roomNo) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection ();
+
+        String sql = "SELECT * FROM Student WHERE RoomNo = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1, roomNo);
+
+        ResultSet resultSet = pstm.executeQuery();
+
+        ArrayList<StudentDto> dtoList = new ArrayList<>();
+
+        while (resultSet.next()) {
+            dtoList.add(
+                    new StudentDto(
+                            resultSet.getString(1),
+                            resultSet.getString(2),
+                            resultSet.getString(3),
+                            resultSet.getString(4),
+                            resultSet.getString(5),
+                            resultSet.getString(6),
+                            resultSet.getString(7),
+                            resultSet.getString(8)
+                    )
+            );
+        }
+        return dtoList;
+    }
 }
 

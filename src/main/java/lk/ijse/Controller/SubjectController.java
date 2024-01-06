@@ -29,17 +29,13 @@ public class SubjectController {
 
     @FXML
     private TableColumn<?, ?> colDelete;
-
-    @FXML
-    void txtSearchSection(MouseEvent event) {
-
-    }
-
+    
     @FXML
     void txtSubjectOnAction(ActionEvent event) {
 
     }
 
     public void loadDetail(String sectionName) {
+
     }
 }

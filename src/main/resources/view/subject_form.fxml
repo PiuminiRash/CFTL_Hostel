@@ -30,6 +30,6 @@
             <TableColumn fx:id="colDelete" prefWidth="151.0" text="Delete" />
          </columns>
       </TableView>
-      <TextField layoutX="30.0" layoutY="60.0" onAction="#txtSubjectOnAction" onDragDetected="#txtSearchSection" promptText=" Search Subject" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <TextField layoutX="30.0" layoutY="60.0" onAction="#txtSubjectOnAction" promptText=" Search Subject" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
    </children>
 </AnchorPane>

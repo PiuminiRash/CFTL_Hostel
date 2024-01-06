@@ -44,6 +44,28 @@ public class StaffController {
     public void initialize() throws SQLException {
         setCellValueFactory();
         loadAllStaff();
+
+        tblStaffDetails.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                openStaffDetails(newValue.getStaffId());
+            }
+        });
+    }
+
+    private void openStaffDetails(String staffId) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/studentprofile_form.fxml"));
+            AnchorPane studentProfilePane = loader.load();
+
+            StudentProfileController studentProfileController = loader.getController();
+
+            studentProfileController.loadStudent(staffId);
+
+            root.getChildren().clear();
+            root.getChildren().add(studentProfilePane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setCellValueFactory(){

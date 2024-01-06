@@ -3,7 +3,6 @@ package lk.ijse.dto.tm;
 import javafx.scene.control.Button;
 import lombok.*;
 
-
 @NoArgsConstructor
 @Getter
 @Setter
