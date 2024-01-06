@@ -102,7 +102,6 @@ public class DashBordController {
     public void btnIncomeOnAction(ActionEvent actionEvent) throws IOException {
         setForms("/view/income_form.fxml");
     }
-
     public void btnLogOutOnAction(ActionEvent actionEvent) throws IOException {
         AnchorPane anchorPane = FXMLLoader.load(getClass().getResource("/view/loginpage_form.fxml"));
         Stage stage = (Stage) root.getScene().getWindow();
