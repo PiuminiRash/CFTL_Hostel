@@ -8,8 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 
-public class SubjectDto {
+public class SectionDetailsDto {
+    private String SectionName;
     private String SubjectCode;
-    private String SubjectName;
-    private String Bucket;
 }

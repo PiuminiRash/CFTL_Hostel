@@ -33,17 +33,17 @@ public class SubjectModel {
         }
     }
 
-    public static boolean saveSubject(String SectionName, String Bucket, String SubjectCode, String SubjectName) throws SQLException {
+    public boolean saveSubject(SubjectDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "INSERT INTO Subject VALUES(?, ?, ? ,?)";
+        String sql = "INSERT INTO Subject VALUES(?, ?, ?)";
         PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1, SectionName);
-        pstm.setString(2, Bucket);
-        pstm.setString(3, SubjectCode);
-        pstm.setString(4, SubjectName);
 
-        return pstm.executeUpdate() > 0;
+        pstm.setString(1, dto.getSubjectCode());
+        pstm.setString(2, dto.getSubjectName());
+        pstm.setString(3, dto.getBucket());
+
+        int rowAffected = pstm.executeUpdate();;
+        return rowAffected > 0 ;
     }
 
     public List<SubjectDto> getAllSubject() throws SQLException {
@@ -60,8 +60,7 @@ public class SubjectModel {
                     new SubjectDto(
                             resultSet.getString(1),
                             resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4)
+                            resultSet.getString(3)
                     )
             );
         }
@@ -85,8 +84,7 @@ public class SubjectModel {
                     new SubjectDto(
                             resultSet.getString(1),
                             resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4)
+                            resultSet.getString(3)
                     )
             );
         }
@@ -109,8 +107,7 @@ public class SubjectModel {
                     new SubjectDto(
                             resultSet.getString(1),
                             resultSet.getString(2),
-                            resultSet.getString(3),
-                            resultSet.getString(4)
+                            resultSet.getString(3)
                     )
             );
         }

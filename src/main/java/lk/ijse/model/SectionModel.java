@@ -1,8 +1,8 @@
 package lk.ijse.model;
 
 import lk.ijse.DB.DbConnection;
-import lk.ijse.dto.BucketDto;
 import lk.ijse.dto.SectionsDto;
+import lk.ijse.dto.tm.SectionTm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,5 +48,27 @@ public class SectionModel {
             );
         }
         return dto;
+    }
+
+    public boolean updateSection(String sectionName) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "UPDATE Section SET SectionName = ? WHERE SectionName = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1, sectionName);
+
+        int rowsAffected = pstm.executeUpdate();
+        return rowsAffected > 0;
+    }
+
+    public boolean updateSectionDetails(List<SectionTm> sectionTmList) throws SQLException {
+        for(SectionTm tm : sectionTmList) {
+            System.out.println("Section " + tm);
+            if(!updateSection(tm.getSectionName())){
+                return false;
+            }
+        }
+        return true;
     }
 }

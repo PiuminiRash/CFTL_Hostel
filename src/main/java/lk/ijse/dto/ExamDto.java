@@ -8,8 +8,10 @@ import lombok.*;
 @Setter
 @ToString
 
-public class SubjectDto {
+public class ExamDto {
+    private String Year;
+    private String Month;
     private String SubjectCode;
-    private String SubjectName;
-    private String Bucket;
+    private String StudentId;
+    private String Mark;
 }

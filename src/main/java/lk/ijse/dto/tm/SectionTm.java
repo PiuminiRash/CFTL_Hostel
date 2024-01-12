@@ -26,4 +26,8 @@ public class SectionTm {
         this.SectionName = SectionName;
         this.Select = Select;
     }
+
+    public SectionTm(String SectionName) {
+        this.SectionName = SectionName;
+    }
 }

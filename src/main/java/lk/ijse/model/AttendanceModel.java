@@ -2,13 +2,11 @@ package lk.ijse.model;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.AttendanceDto;
-import lk.ijse.dto.EmployeeDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +46,7 @@ public class AttendanceModel {
         String sql = "INSERT INTO Attendance (Date, TeacherId, TeacherName) VALUES (?, ?, ?)";
 
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-            connection.setAutoCommit(false); // Start a transaction
-
+            connection.setAutoCommit(false);
             for (AttendanceDto dto : attendanceDtoList) {
                 pstm.setString(1, dto.getDate());
                 pstm.setString(2, dto.getTeacherId());

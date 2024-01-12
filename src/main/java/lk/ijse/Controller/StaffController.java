@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.StaffDto;
 import lk.ijse.dto.tm.StaffTm;
 import lk.ijse.model.StaffModel;
-import lk.ijse.model.StudentModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -54,12 +53,12 @@ public class StaffController {
 
     private void openStaffDetails(String staffId) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/studentprofile_form.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/staffprofile_form.fxml"));
             AnchorPane studentProfilePane = loader.load();
 
-            StudentProfileController studentProfileController = loader.getController();
+            StaffProfileController staffProfileController = loader.getController();
 
-            studentProfileController.loadStudent(staffId);
+            staffProfileController.loadStaff(staffId);
 
             root.getChildren().clear();
             root.getChildren().add(studentProfilePane);

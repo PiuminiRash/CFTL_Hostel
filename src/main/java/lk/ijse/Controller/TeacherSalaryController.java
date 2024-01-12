@@ -13,7 +13,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.AttendanceDto;
-import lk.ijse.dto.TeacherDto;
+import lk.ijse.dto.StaffDto;
 import lk.ijse.dto.tm.TeacherSalaryTm;
 import lk.ijse.model.*;
 
@@ -64,7 +64,7 @@ public class TeacherSalaryController {
 
     private String month;
 
-    private TeacherModel teacherModel = new TeacherModel();
+    private StaffModel staffModel = new StaffModel();
 
     private AttendanceModel attendanceModel = new AttendanceModel();
 
@@ -87,7 +87,7 @@ public class TeacherSalaryController {
     }
 
     public void CalSalary() throws SQLException {
-        List<TeacherDto> teacherDtoList = TeacherModel.getAllTeacher();
+        List<StaffDto> teacherDtoList = staffModel.getAllStaff();
         for (int i=0; i<teacherDtoList.size(); i++) {
             List<AttendanceDto> attendanceDtoList = AttendanceModel.getAttendance(month);
             for (int j=0; j<attendanceDtoList.size();j++) {

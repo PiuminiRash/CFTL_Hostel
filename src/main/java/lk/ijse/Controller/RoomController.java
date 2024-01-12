@@ -97,13 +97,6 @@ public class RoomController  {
         }
     }
 
-    private void setData(RoomTm row) {
-        txtRoomNo.setText(row.getRoomNo());
-        txtRoomName.setText(row.getRoomName());
-        txtNoOfBed.setText(String.valueOf(row.getNoOfBed()));
-        //txtStudentCount.setText(String.valueOf(row.getStudentCount()));
-    }
-
     private void generateNextRoomNo() {
         try {
             String roomNo = roomModel.generateNextRoomNo();
@@ -192,8 +185,6 @@ public class RoomController  {
         String room_no = txtRoomNo.getText();
         String room_name = txtRoomName.getText();
         int no_of_beds = Integer.parseInt(txtNoOfBed.getText());
-        //int student_count = Integer.parseInt(txtStudentCount.getText());
-
 
         try{
             if (!validateRoom()){
@@ -217,7 +208,6 @@ public class RoomController  {
         txtRoomNo.setText("");
         txtRoomName.setText("");
         txtNoOfBed.setText("");
-        //txtStudentCount.setText("");
     }
 
     private boolean validateRoom() {
@@ -237,11 +227,6 @@ public class RoomController  {
             showErrorNotification("Invalid count", "The beds count you entered is invalid");
             isValidate = false;
         }
-//        boolean count = Pattern.matches("[0-9]{1,}",txtStudentCount.getText());
-//        if (!beds){
-//            showErrorNotification("Invalid count", "The student count you entered is invalid");
-//            isValidate = false;
-//        }
         return isValidate;
     }
 
@@ -250,8 +235,6 @@ public class RoomController  {
                 .title(title)
                 .text(text)
                 .showError();
-
-
     }
 
     public void txtSearchRoomOnAction(ActionEvent actionEvent) {

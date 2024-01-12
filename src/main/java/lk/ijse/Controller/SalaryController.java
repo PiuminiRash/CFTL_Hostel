@@ -93,8 +93,9 @@ public class SalaryController {
     @FXML
     private TableColumn<?,?> colFinalSalary;
 
-    private ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
+    private StaffModel staffModel = new StaffModel();
 
+    private ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
     public void initialize() {
         cmbType.getItems().addAll("Employee", "Teacher");
@@ -314,10 +315,10 @@ public class SalaryController {
     private void loadTeacherId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<TeacherDto> teacherDtos = TeacherModel.getAllTeacher();
+            List<StaffDto> teacherDtos = staffModel.getAllStaff();
 
-            for (TeacherDto dto : teacherDtos) {
-                obList.add(dto.getTeacherId());
+            for (StaffDto dto : teacherDtos) {
+                obList.add(dto.getStaffId());
             }
             cmbStaffId.setItems(obList);
         } catch (SQLException e) {
@@ -328,10 +329,10 @@ public class SalaryController {
     private void loadEmployeesId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> employeeDtos = EmployeeModel.getAllEmployee();
+            List<StaffDto> employeeDtos = staffModel.getAllStaff();
 
-            for (EmployeeDto dto : employeeDtos) {
-                obList.add(dto.getEmployeeId());
+            for (StaffDto dto : employeeDtos) {
+                obList.add(dto.getStaffId());
             }
             cmbStaffId.setItems(obList);
         } catch (SQLException e) {
@@ -345,8 +346,8 @@ public class SalaryController {
             String id = cmbStaffId.getValue();
 
             try {
-                TeacherDto dto = TeacherModel.searchTeacher(id);
-                lblStaffName.setText(dto.getTeacherName());
+                StaffDto dto = staffModel.searchStaff(id);
+                lblStaffName.setText(dto.getStaffId());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -354,9 +355,9 @@ public class SalaryController {
             String id = cmbStaffId.getValue();
 
             try {
-                EmployeeDto dto = EmployeeModel.searchEmployee(id);
-                lblStaffName.setText(dto.getEmployeeName());
-                lblEmail.setText(dto.getAddress());
+                StaffDto dto = staffModel.searchStaff(id);
+                lblStaffName.setText(dto.getStaffId());
+                lblEmail.setText(dto.getStaffName());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

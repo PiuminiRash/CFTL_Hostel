@@ -1,6 +1,7 @@
 package lk.ijse.dto;
 
-import lk.ijse.dto.tm.AddTeacherTm;
+import lk.ijse.dto.tm.SectionTm;
+import lk.ijse.dto.tm.StaffTm;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,9 @@ import java.util.List;
 @ToString
 
 public class PlaceSubjectDto {
-    private String SectionName;
-    private String Bucket;
     private String SubjectCode;
     private String SubjectName;
-    private List<AddTeacherTm> addTeacherTmList = new ArrayList<>();
+    private String Bucket;
+    private List<SectionTm> sectionTmList = new ArrayList<>();
+    private List<StaffTm> staffTmList = new ArrayList<>();
 }

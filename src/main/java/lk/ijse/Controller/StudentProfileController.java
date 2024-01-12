@@ -271,7 +271,6 @@ public class StudentProfileController {
         String bucket3 = cmbBucket03.getValue();
         String room = txtRoomNo.getText();
         try{
-
             var dto = new StudentDto (id,name,address,section,bucket1,bucket2,bucket3,room);
             boolean isValidate = validateStudent();
             if (isValidate) {

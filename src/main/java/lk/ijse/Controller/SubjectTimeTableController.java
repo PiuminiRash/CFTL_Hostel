@@ -143,7 +143,7 @@ public class SubjectTimeTableController {
     }
 
     private void loadTimeTable(){
-        var model = new TeacherModel();
+        var model = new StaffModel();
 
         ObservableList<TimeTableTm> obList = FXCollections.observableArrayList();
 

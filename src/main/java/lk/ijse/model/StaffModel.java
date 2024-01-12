@@ -2,7 +2,7 @@ package lk.ijse.model;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.StaffDto;
-import lk.ijse.dto.StudentDto;
+import lk.ijse.dto.tm.StaffTm;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,6 +78,22 @@ public class StaffModel {
         return rowsAffected > 0 ;
     }
 
+    public boolean updateStaff(StaffDto dto) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "UPDATE Staff SET StaffType = ? , StaffName = ? , ContactNo = ? , NIC = ? , Email = ? WHERE StaffId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1, dto.getStaffType());
+        pstm.setString(2, dto.getStaffName());
+        pstm.setInt(3, dto.getContactNo());
+        pstm.setString(4, dto.getNIC());
+        pstm.setString(5, dto.getEmail());
+        pstm.setString(6, dto.getStaffId());
+
+        return pstm.executeUpdate() > 0;
+    }
+
     public List<StaffDto> getAllStaff() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -138,5 +154,50 @@ public class StaffModel {
             );
         }
         return dtoList;
+    }
+
+    public StaffDto searchStaff(String id) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection ();
+
+        String sql = "SELECT * FROM Staff WHERE StaffId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+
+        ResultSet resultSet = pstm.executeQuery();
+
+        StaffDto dto = null;
+
+        if(resultSet.next()) {
+            String type = resultSet.getString(2);
+            String name = resultSet.getString(3);
+            int contactNo = Integer.parseInt(resultSet.getString(4));
+            String NIC = resultSet.getString(5);
+            String email = resultSet.getString(6);
+
+            dto = new StaffDto(type,id,name,contactNo,NIC,email);
+        }
+        return dto;
+    }
+
+    public boolean updateStaff(String staffId, String staffName) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "UPDATE Staff SET StaffName = ? WHERE StaffId = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setString(1, staffId);
+            pstm.setString(2, staffName);
+
+            return pstm.executeUpdate() > 0;
+        }
+    }
+
+    public boolean updateStaffDetails(List<StaffTm> staffTmList) throws SQLException {
+        for(StaffTm tm : staffTmList) {
+            System.out.println("Staff: " + tm);
+            if(!updateStaff(tm.getStaffId(), tm.getStaffName())) {
+                return false;
+            }
+        }
+        return true;
     }
 }

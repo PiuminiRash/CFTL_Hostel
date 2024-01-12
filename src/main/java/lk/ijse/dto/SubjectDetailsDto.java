@@ -1,6 +1,9 @@
 package lk.ijse.dto;
 
+import lk.ijse.dto.tm.StaffTm;
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -8,8 +11,7 @@ import lombok.*;
 @Setter
 @ToString
 
-public class SubjectDto {
+public class SubjectDetailsDto {
     private String SubjectCode;
-    private String SubjectName;
-    private String Bucket;
+    private String StaffId;
 }

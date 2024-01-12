@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-
 public class SectionController {
     @FXML
     private AnchorPane root;
@@ -97,8 +96,9 @@ public class SectionController {
             for (SectionsDto dto : dtoList) {
                 Button deleteBtn = new Button("Delete");
 
-                int studentCount = studentModel.getCount(dtoList.toString());
-                //setDeleteButtonOnAction(deleteBtn,dto.getStudentId());
+                String section = dto.getSectionName();
+
+                int studentCount = studentModel.getCountSection(section);
 
                 obList.add(
                         new SectionTm(

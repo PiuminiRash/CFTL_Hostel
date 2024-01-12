@@ -1,33 +1,58 @@
 package lk.ijse.Controller;
 
 import com.jfoenix.controls.JFXComboBox;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.dto.StudentDto;
-
-import java.sql.SQLException;
-import java.time.Month;
-import java.time.Year;
 
 public class ExamController {
     @FXML
     private AnchorPane root;
 
     @FXML
-    private JFXComboBox<Year> cmbYear;
+    private JFXComboBox<String> cmbYear;
 
     @FXML
-    private ListView<Month> listMonth;
+    private JFXComboBox<String> cmbMonth;
 
-    public void initialize() {
-        loadMonth();
+    @FXML
+    private JFXComboBox<String> cmbSubject;
+
+    @FXML
+    private TableView<?> tblExam;
+
+    @FXML
+    private TableColumn<?, ?> colStudentId;
+
+    @FXML
+    private TableColumn<?, ?> colStudentName;
+
+    @FXML
+    private TableColumn<?, ?> colMark;
+
+    @FXML
+    private TableColumn<?, ?> colDelete;
+
+    @FXML
+    private JFXTextField txtStudentName;
+
+    @FXML
+    private JFXTextField txtSubjectMark;
+
+    @FXML
+    void btnAbsuntOnAction(ActionEvent event) {
+
     }
 
-    public void loadMonth(){
-        ObservableList<Month> months = FXCollections.observableArrayList(Month.values());
-        listMonth.setItems(months);
+    @FXML
+    void btnMarkOnAction(ActionEvent event) {
+
+    }
+
+    public void cmbSubjectOnnAction(ActionEvent actionEvent) {
+
     }
 }

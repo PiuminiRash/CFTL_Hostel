@@ -179,5 +179,21 @@ public class StudentModel {
         }
         return dtoList;
     }
+
+    public int getCountSection(String section) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+        String sql = "SELECT COUNT(*) AS StudentCount FROM Student WHERE Section = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setString(1, section);
+
+            try (ResultSet resultSet = pstm.executeQuery()) {
+                if (resultSet.next()) {
+                    int studentCount = resultSet.getInt("StudentCount");
+                    return studentCount;
+                }
+            }
+        }
+        return 0;
+    }
 }
 

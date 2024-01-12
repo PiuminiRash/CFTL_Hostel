@@ -51,7 +51,7 @@ public class UpdateAttendanceController {
     @FXML
     private DatePicker dateDate;
 
-    private TeacherModel teacherModel = new TeacherModel();
+    private StaffModel staffModel = new StaffModel();
 
     private AttendanceModel attendanceModel = new AttendanceModel();
 
@@ -123,8 +123,8 @@ public class UpdateAttendanceController {
         String id = cmbId.getValue();
 
         try {
-            TeacherDto dto = teacherModel.searchTeacher(id);
-            lblName.setText(dto.getTeacherName());
+            StaffDto dto = staffModel.searchStaff(id);
+            lblName.setText(dto.getStaffId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -133,10 +133,10 @@ public class UpdateAttendanceController {
     private void loadAllTeacher() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<TeacherDto> teacherDtos = TeacherModel.getAllTeacher();
+            List<StaffDto> teacherDtos = staffModel.getAllStaff();
 
-            for (TeacherDto dto : teacherDtos) {
-                obList.add(dto.getTeacherId());
+            for (StaffDto dto : teacherDtos) {
+                obList.add(dto.getStaffId());
             }
             cmbId.setItems(obList);
         } catch (SQLException e) {
@@ -145,28 +145,6 @@ public class UpdateAttendanceController {
     }
 
     public void btnAttendanceSaveOnAction(ActionEvent actionEvent) {
-       /* String date = dateDate.getPromptText();
-        String id = cmbId.getValue();
-        String name = lblName.getText();
-
-        List<AttendanceTm> attendanceTmList = new ArrayList<>();
-        for (int i = 0; i < tblAttendance.getItems().size(); i++) {
-            AttendanceTm attendanceTm = obList.get(i);
-
-            attendanceTmList.add(attendanceTm);
-        }
-
-        System.out.println("Attendance Details: " +  attendanceTmList);
-        var attendanceDto = new AttendanceDto(date,id,name);
-        try {
-            boolean isSuccess = AttendanceModel.addAttendance(attendanceDto);
-            if (isSuccess) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Attendance Save Success!").show();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
         String date = dateDate.getPromptText();
 
         List<AttendanceDto> attendanceDtoList = new ArrayList<>();
@@ -175,7 +153,6 @@ public class UpdateAttendanceController {
             String id = attendanceTm.getTeacherId();
             String name = attendanceTm.getTeacherName();
             boolean isPresent = attendanceTm.isPresent();
-
 
             AttendanceDto attendanceDto = new AttendanceDto(date, id, name, isPresent);
             attendanceDtoList.add(attendanceDto);
