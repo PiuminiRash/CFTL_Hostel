@@ -3,13 +3,15 @@ package lk.ijse.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 
-public class StudentDto {
+public class StudentDto implements Serializable {
     private String StudentId;
     private String StudentName;
     private String StudentAddress;

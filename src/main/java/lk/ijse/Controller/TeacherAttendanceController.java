@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.AttendanceDto;
 import lk.ijse.dto.tm.AttendanceViewTm;
-import lk.ijse.model.AttendanceModel;
+import lk.ijse.dto.AttendanceModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -63,11 +63,12 @@ public class TeacherAttendanceController {
                 List<AttendanceDto> attendanceList = AttendanceModel.getAttendance(selectedDate);
 
                 for (AttendanceDto dto : attendanceList) {
+                    String id = dto.getTeacherId();
                     obList.add(
                             new AttendanceViewTm(
                                     dto.getDate(),
                                     dto.getTeacherId(),
-                                    dto.getTeacherName()
+                                    id
                             )
                     );
                 }

@@ -10,9 +10,9 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.dto.AttendanceModel;
 import lk.ijse.dto.*;
 import lk.ijse.dto.tm.AttendanceTm;
-import lk.ijse.model.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -50,8 +50,6 @@ public class UpdateAttendanceController {
 
     @FXML
     private DatePicker dateDate;
-
-    private TeacherModel teacherModel = new TeacherModel();
 
     private AttendanceModel attendanceModel = new AttendanceModel();
 
@@ -120,28 +118,28 @@ public class UpdateAttendanceController {
 
 
     public void cmbIdOnAction(ActionEvent actionEvent) {
-        String id = cmbId.getValue();
-
-        try {
-            TeacherDto dto = teacherModel.searchTeacher(id);
-            lblName.setText(dto.getTeacherName());
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        String id = cmbId.getValue();
+//
+//        try {
+//            TeacherDto dto = teacherModel.searchTeacher(id);
+//            lblName.setText(dto.getTeacherName());
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     private void loadAllTeacher() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
-        try {
-            List<TeacherDto> teacherDtos = TeacherModel.getAllTeacher();
-
-            for (TeacherDto dto : teacherDtos) {
-                obList.add(dto.getTeacherId());
-            }
-            cmbId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        ObservableList<String> obList = FXCollections.observableArrayList();
+//        try {
+//            List<TeacherDto> teacherDtos = TeacherModel.getAllTeacher();
+//
+//            for (TeacherDto dto : teacherDtos) {
+//                obList.add(dto.getTeacherId());
+//            }
+//            cmbId.setItems(obList);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     public void btnAttendanceSaveOnAction(ActionEvent actionEvent) {
@@ -177,8 +175,8 @@ public class UpdateAttendanceController {
             boolean isPresent = attendanceTm.isPresent();
 
 
-            AttendanceDto attendanceDto = new AttendanceDto(date, id, name, isPresent);
-            attendanceDtoList.add(attendanceDto);
+            //AttendanceDto attendanceDto = new AttendanceDto(date, id, name, isPresent);
+            //attendanceDtoList.add(attendanceDto);
         }
 
         try {

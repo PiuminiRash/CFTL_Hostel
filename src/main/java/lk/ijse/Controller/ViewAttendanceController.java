@@ -13,7 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import lk.ijse.dto.tm.AttendanceViewTm;
 
-import static lk.ijse.model.AttendanceModel.getAttendance;
+import static lk.ijse.dto.AttendanceModel.getAttendance;
 
 public class ViewAttendanceController {
     @FXML

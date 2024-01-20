@@ -1,4 +1,4 @@
-package lk.ijse.model;
+package lk.ijse.dto;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.BranchDto;
@@ -47,7 +47,6 @@ public class RoomModel {
         pstm.setString(1, dto.getRoomNo());
         pstm.setString(2, dto.getRoomName());
         pstm.setInt(3, dto.getNoOfBed());
-        //pstm.setInt(4, dto.getStudentCount());
 
         boolean isSaved = pstm.executeUpdate()>0;
         return isSaved;
@@ -56,7 +55,7 @@ public class RoomModel {
     public boolean updateRoom(RoomDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
-        String sql = "UPDATE Room SET RoomName = ?, NoOfBeds = ?, StudentCount = ? WHERE RoomNo = ?";
+        String sql = "UPDATE Room SET RoomName = ?, NoOfBeds = ? WHERE RoomNo = ?";
         PreparedStatement pstm = connection.prepareStatement(sql);
 
         pstm.setString(1, dto.getRoomName());
@@ -116,7 +115,6 @@ public class RoomModel {
                             resultSet.getString(1),
                             resultSet.getString(2),
                             resultSet.getInt(3)
-                            //resultSet.getInt(4)
                     )
             );
         }

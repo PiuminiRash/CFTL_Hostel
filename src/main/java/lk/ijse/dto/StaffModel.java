@@ -1,4 +1,4 @@
-package lk.ijse.model;
+package lk.ijse.dto;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.StaffDto;
@@ -78,6 +78,22 @@ public class StaffModel {
         return rowsAffected > 0 ;
     }
 
+    public boolean updateStaff(StaffDto dto) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection();
+
+        String sql = "UPDATE Staff SET StaffType = ? , StaffName = ? , ContactNo = ? , NIC = ? , Email = ? WHERE StaffId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+
+        pstm.setString(1, dto.getStaffType());
+        pstm.setString(2, dto.getStaffName());
+        pstm.setInt(3, dto.getContactNo());
+        pstm.setString(4, dto.getNIC());
+        pstm.setString(5, dto.getEmail());
+        pstm.setString(6, dto.getStaffId());
+
+        return pstm.executeUpdate() > 0;
+    }
+
     public List<StaffDto> getAllStaff() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
@@ -138,5 +154,28 @@ public class StaffModel {
             );
         }
         return dtoList;
+    }
+
+    public StaffDto searchStaff(String id) throws SQLException {
+        Connection connection = DbConnection.getInstance().getConnection ();
+
+        String sql = "SELECT * FROM Staff WHERE StaffId = ?";
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setString(1, id);
+
+        ResultSet resultSet = pstm.executeQuery();
+
+        StaffDto dto = null;
+
+        if(resultSet.next()) {
+            String type = resultSet.getString(2);
+            String name = resultSet.getString(3);
+            int contactNo = Integer.parseInt(resultSet.getString(4));
+            String NIC = resultSet.getString(5);
+            String email = resultSet.getString(6);
+
+            dto = new StaffDto(type,id,name,contactNo,NIC,email);
+        }
+        return dto;
     }
 }

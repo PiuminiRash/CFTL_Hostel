@@ -11,6 +11,5 @@ import lombok.*;
 public class AttendanceDto {
     private String date;
     private String teacherId;
-    private String teacherName;
     private boolean isPresent;
 }

@@ -11,13 +11,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.ExpenditureBO;
+import lk.ijse.BO.Custom.IncomeBO;
 import lk.ijse.dto.ExpenditureDto;
 import lk.ijse.dto.IncomeDto;
 import lk.ijse.dto.tm.ExpenditureTm;
 import lk.ijse.dto.tm.IncomeTm;
-import lk.ijse.model.ExpenditureModel;
-import lk.ijse.model.IncomeModel;
-import net.sf.jasperreports.engine.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,6 +30,9 @@ import java.util.List;
 
 
 public class IncomeController {
+    @FXML
+    private JFXComboBox<String> cmbType;
+
     @FXML
     private AnchorPane root;
 
@@ -47,12 +50,6 @@ public class IncomeController {
 
     @FXML
     private JFXTextField txtAmount;
-
-    @FXML
-    private JFXButton btnExpenditure;
-
-    @FXML
-    private JFXButton btnIncome;
 
     @FXML
     private TableView<IncomeTm> tblIncome;
@@ -100,15 +97,17 @@ public class IncomeController {
 
     private String month;
 
-    private IncomeModel incomeModel = new IncomeModel();
+    IncomeBO incomeBO = (IncomeBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.INCOME);
 
-    private ExpenditureModel expenditureModel = new ExpenditureModel();
+    ExpenditureBO expenditureBO = (ExpenditureBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.EXPENDITURE);
 
     private ObservableList<ExpenditureTm> ExobList = FXCollections.observableArrayList();
 
     private ObservableList<IncomeTm> InobList = FXCollections.observableArrayList();
 
     public void initialize() {
+        cmbType.getItems().addAll("Income", "Expenditure");
+
         dateDate.setPromptText(String.valueOf(LocalDate.now()));
         setMonth();
         setYear();
@@ -136,6 +135,35 @@ public class IncomeController {
         colExAmount.setCellValueFactory(new PropertyValueFactory<>("amount2"));
     }
 
+    public void btnAddOnAction(ActionEvent actionEvent) {
+        if ("Income".equals(cmbType.getValue())) {
+            String date = String.valueOf(dateDate.getValue());
+            String desc = txtDesc.getText();
+            double amount = Double.parseDouble(txtAmount.getText());
+
+            var incomeTm = new IncomeTm(date,desc,amount);
+
+            InobList.add(incomeTm);
+
+            tblIncome.setItems(InobList);
+
+            calIncome();
+        } else {
+            String desc = txtDesc.getText();
+            double amount = Double.parseDouble(txtAmount.getText());
+
+            String date = String.valueOf(dateDate.getValue());
+
+            var expenditureTm = new ExpenditureTm(date,desc,amount);
+
+            ExobList.add(expenditureTm);
+
+            tblExpenditure.setItems(ExobList);
+
+            calIExpenditure();
+        }
+    }
+
     public void setMonth() {
         ObservableList<Month> months = FXCollections.observableArrayList(Month.values());
         cmbMonth.setItems(months);
@@ -146,35 +174,6 @@ public class IncomeController {
     public void setYear(){
         int currentYear = Year.now().getValue();
         txtYear.setText(String.valueOf(currentYear));
-    }
-
-    public void btnExpenditureOnAction(ActionEvent actionEvent) {
-        String desc = txtDesc.getText();
-        double amount = Double.parseDouble(txtAmount.getText());
-
-        String date = String.valueOf(dateDate.getValue());
-
-        var expenditureTm = new ExpenditureTm(date,desc,amount);
-
-        ExobList.add(expenditureTm);
-
-        tblExpenditure.setItems(ExobList);
-
-        calIExpenditure();
-    }
-
-    public void btnIncomeOnAction() {
-        String date = String.valueOf(dateDate.getValue());
-        String desc = txtDesc.getText();
-        double amount = Double.parseDouble(txtAmount.getText());
-
-        var incomeTm = new IncomeTm(date,desc,amount);
-
-        InobList.add(incomeTm);
-
-        tblIncome.setItems(InobList);
-
-        calIncome();
     }
 
     public void calIncome(){
@@ -209,9 +208,6 @@ public class IncomeController {
         }
     }
 
-    public void btnBackOnAction(ActionEvent actionEvent) {
-    }
-
     public void btnSaveInOnAction(ActionEvent actionEvent) {
         String desc = txtDesc.getText();
         double amount = Double.parseDouble(txtAmount.getText());
@@ -229,11 +225,11 @@ public class IncomeController {
         System.out.println("Income Details: " + incomeTmList);
         var incomeDto = new IncomeDto(desc,amount,year,month,date);
         try {
-            boolean isSuccess = IncomeModel.addIncome(incomeDto);
+            boolean isSuccess = incomeBO.saveIncome(incomeDto);
             if (isSuccess) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Incomes Save Success!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -245,7 +241,7 @@ public class IncomeController {
         String month = String.valueOf(cmbMonth.getValue());
         String date = dateDate.getPromptText();
 
-        List<ExpenditureTm> expenditureTmList = new ArrayList<>();
+        List<IncomeDto> expenditureTmList = new ArrayList<>();
         for (int i = 0; i < tblExpenditure.getItems().size(); i++) {
             ExpenditureTm expenditureTm = ExobList.get(i);
 
@@ -255,11 +251,11 @@ public class IncomeController {
         System.out.println("Expencive Details: " +expenditureTmList);
         var expenditureDto = new ExpenditureDto(desc,amount,year,month,date);
         try {
-            boolean isSuccess = ExpenditureModel.addExpenditure(expenditureDto);
+            boolean isSuccess = expenditureBO.saveExpenditure(expenditureDto);
             if (isSuccess) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Expenditure Payment Save Success!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -272,7 +268,7 @@ public class IncomeController {
             if (selectedMonth != null) {
                 month = selectedMonth.name();
             }
-            List<IncomeTm> dtoList = IncomeModel.searchIncome(year, month);
+            List<IncomeTm> dtoList = incomeBO.searchIncome(year, month);
 
             for (IncomeTm dto : dtoList) {
                 InobList.add(
@@ -286,7 +282,7 @@ public class IncomeController {
 
             tblIncome.setItems(InobList);
 
-            List<ExpenditureTm> dtoList1 = ExpenditureModel.searchExpenditure(year, month);
+            List<ExpenditureTm> dtoList1 = expenditureBO.searchExpenditure(year, month);
 
             for ( ExpenditureTm dto : dtoList1) {
                 ExobList.add(
@@ -306,19 +302,6 @@ public class IncomeController {
         calIncome();
         calIExpenditure();
         calNetIncom();
-    }
-
-    public void btnPrintOnAction(ActionEvent actionEvent) throws JRException, SQLException {
-        /*InputStream resourceAsStream = getClass().getResourceAsStream("/report/Waves.jrxml");
-        JasperDesign load = JRXmlLoader.load(resourceAsStream);
-        JasperReport jasperReport = JasperCompileManager.compileReport(load);
-        JasperPrint jasperPrint = JasperFillManager.fillReport(
-                jasperReport,
-                null,
-                DbConnection.getInstance().getConnection()
-        );
-
-        JasperViewer.viewReport(jasperPrint,false);*/
     }
 
     public void btnSalaryOnAction(ActionEvent actionEvent) throws IOException {

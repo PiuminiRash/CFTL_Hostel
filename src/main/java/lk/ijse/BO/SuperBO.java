@@ -1,2 +1,4 @@
-package lk.ijse.BO;public interface SuperBO {
+package lk.ijse.BO;
+
+public interface SuperBO {
 }

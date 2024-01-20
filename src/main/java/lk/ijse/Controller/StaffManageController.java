@@ -6,8 +6,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.StaffBO;
 import lk.ijse.dto.StaffDto;
-import lk.ijse.model.StaffModel;
+import lk.ijse.dto.StaffModel;
 
 
 import java.sql.SQLException;
@@ -34,6 +36,8 @@ public class StaffManageController {
     @FXML
     private JFXTextField txtNIC;
 
+    StaffBO staffBO = (StaffBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.STAFF);
+
     private StaffModel staffModel = new StaffModel();
 
     public void initialize() {
@@ -53,13 +57,13 @@ public class StaffManageController {
 //            if (!validateStaff()) {
 //                return;
 //            }
-            var dto  = new StaffDto(staffType,staffId,staffName,contactNo,NIC,email);
-            boolean isSaved = staffModel.saveStaff(dto);
+            var staffDto  = new StaffDto(staffType,staffId,staffName,contactNo,NIC,email);
+            boolean isSaved = staffBO.saveStaff(staffDto);
 
             if (isSaved) {
                 new Alert(Alert.AlertType.CONFIRMATION,"Staff Details Save").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

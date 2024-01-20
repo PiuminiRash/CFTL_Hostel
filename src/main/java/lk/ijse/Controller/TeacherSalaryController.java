@@ -12,15 +12,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.dto.AttendanceDto;
-import lk.ijse.dto.TeacherDto;
+import lk.ijse.dto.AttendanceModel;
 import lk.ijse.dto.tm.TeacherSalaryTm;
-import lk.ijse.model.*;
 
 import java.sql.SQLException;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TeacherSalaryController {
     @FXML
@@ -64,8 +60,6 @@ public class TeacherSalaryController {
 
     private String month;
 
-    private TeacherModel teacherModel = new TeacherModel();
-
     private AttendanceModel attendanceModel = new AttendanceModel();
 
     private ObservableList<TeacherSalaryTm> obList = FXCollections.observableArrayList();
@@ -87,24 +81,24 @@ public class TeacherSalaryController {
     }
 
     public void CalSalary() throws SQLException {
-        List<TeacherDto> teacherDtoList = TeacherModel.getAllTeacher();
-        for (int i=0; i<teacherDtoList.size(); i++) {
-            List<AttendanceDto> attendanceDtoList = AttendanceModel.getAttendance(month);
-            for (int j=0; j<attendanceDtoList.size();j++) {
-                List<TeacherSalaryTm> dtoList = new ArrayList<>();
-                for (TeacherSalaryTm dto : dtoList) {
-                    obList.add(
-                            new TeacherSalaryTm(
-                                    dto.getTeacherId(),
-                                    dto.getTeacherName(),
-                                    dto.getDatPay(),
-                                    dto.getAttendanceCount(),
-                                    dto.getSalary()
-                            )
-                    );
-                }
-            }
-        }
+//        List<TeacherDto> teacherDtoList = TeacherModel.getAllTeacher();
+//        for (int i=0; i<teacherDtoList.size(); i++) {
+//            List<AttendanceDto> attendanceDtoList = AttendanceModel.getAttendance(month);
+//            for (int j=0; j<attendanceDtoList.size();j++) {
+//                List<TeacherSalaryTm> dtoList = new ArrayList<>();
+//                for (TeacherSalaryTm dto : dtoList) {
+//                    obList.add(
+//                            new TeacherSalaryTm(
+//                                    dto.getTeacherId(),
+//                                    dto.getTeacherName(),
+//                                    dto.getDatPay(),
+//                                    dto.getAttendanceCount(),
+//                                    dto.getSalary()
+//                            )
+//                    );
+//                }
+//            }
+//        }
     }
 
     private void setCellValueFactory() {

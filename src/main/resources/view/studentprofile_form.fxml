@@ -19,6 +19,19 @@
 
 <AnchorPane fx:id="root" minHeight="477.0" minWidth="980.0" prefHeight="687.0" prefWidth="1012.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.Controller.StudentProfileController">
     <children>
+      <Text layoutX="422.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Progress">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <StackedBarChart layoutX="30.0" layoutY="406.0" prefHeight="242.0" prefWidth="956.0" AnchorPane.bottomAnchor="10.0">
+        <xAxis>
+          <CategoryAxis label="Month" side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Progress" side="LEFT" />
+        </yAxis>
+      </StackedBarChart>
         <ImageView fitHeight="687.0" fitWidth="1012.0" layoutX="14.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
                 <Image url="@../assests/gradient_4_16.jpg" />
@@ -134,19 +147,6 @@
             </unFocusColor>
         </JFXTextField>
       <JFXButton layoutX="586.0" layoutY="356.0" onAction="#btnUpdateOnAction" style="-fx-background-color: white;" text="Update" />
-      <StackedBarChart layoutX="30.0" layoutY="406.0" prefHeight="242.0" prefWidth="956.0" AnchorPane.bottomAnchor="10.0">
-        <xAxis>
-          <CategoryAxis label="Month" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis label="Progress" side="LEFT" />
-        </yAxis>
-      </StackedBarChart>
-      <Text layoutX="422.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Student Progress">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Text>
       <Separator layoutX="669.0" layoutY="62.0" orientation="VERTICAL" prefHeight="255.0" prefWidth="0.0" />
       <Text layoutX="780.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Details">
          <font>
@@ -182,7 +182,10 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Label fx:id="lblDate" layoutX="825.0" layoutY="20.0" prefHeight="21.0" prefWidth="100.0" text="Date" />
-      <Text layoutX="745.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date :" />
+      <ImageView fitHeight="268.0" fitWidth="487.0" layoutX="41.0" layoutY="399.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../../../CFTL_Hostel/src/main/resources/assests/Subjectwall-removebg-preview.png" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>

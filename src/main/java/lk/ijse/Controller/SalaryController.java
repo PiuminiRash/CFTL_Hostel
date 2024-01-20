@@ -19,10 +19,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.ExpenditureBO;
 import lk.ijse.DB.DbConnection;
+import lk.ijse.dto.SalaryModel;
+import lk.ijse.dto.StaffModel;
 import lk.ijse.dto.*;
 import lk.ijse.dto.tm.SalaryTm;
-import lk.ijse.model.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
@@ -93,8 +96,11 @@ public class SalaryController {
     @FXML
     private TableColumn<?,?> colFinalSalary;
 
-    private ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
+    StaffModel staffModel = new StaffModel();
 
+    ExpenditureBO expenditureBO = (ExpenditureBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.EXPENDITURE);
+
+    private ObservableList<SalaryTm> obList = FXCollections.observableArrayList();
 
     public void initialize() {
         cmbType.getItems().addAll("Employee", "Teacher");
@@ -312,26 +318,26 @@ public class SalaryController {
     }
 
     private void loadTeacherId() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
-        try {
-            List<TeacherDto> teacherDtos = TeacherModel.getAllTeacher();
-
-            for (TeacherDto dto : teacherDtos) {
-                obList.add(dto.getTeacherId());
-            }
-            cmbStaffId.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+//        ObservableList<String> obList = FXCollections.observableArrayList();
+//        try {
+//            List<TeacherDto> teacherDtos = TeacherModel.getAllTeacher();
+//
+//            for (TeacherDto dto : teacherDtos) {
+//                obList.add(dto.getTeacherId());
+//            }
+//            cmbStaffId.setItems(obList);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
     private void loadEmployeesId() {
         ObservableList<String> obList = FXCollections.observableArrayList();
         try {
-            List<EmployeeDto> employeeDtos = EmployeeModel.getAllEmployee();
+            List<StaffDto> employeeDtos = staffModel.getAllStaff();
 
-            for (EmployeeDto dto : employeeDtos) {
-                obList.add(dto.getEmployeeId());
+            for (StaffDto dto : employeeDtos) {
+                obList.add(dto.getStaffName());
             }
             cmbStaffId.setItems(obList);
         } catch (SQLException e) {
@@ -340,27 +346,27 @@ public class SalaryController {
     }
 
     public void cmbStaffIdOnAction(ActionEvent actionEvent) {
-        String selectedType = cmbType.getValue();
-        if ("Teacher".equals(selectedType)) {
-            String id = cmbStaffId.getValue();
-
-            try {
-                TeacherDto dto = TeacherModel.searchTeacher(id);
-                lblStaffName.setText(dto.getTeacherName());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else if ("Employee".equals(selectedType)) {
-            String id = cmbStaffId.getValue();
-
-            try {
-                EmployeeDto dto = EmployeeModel.searchEmployee(id);
-                lblStaffName.setText(dto.getEmployeeName());
-                lblEmail.setText(dto.getAddress());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//        String selectedType = cmbType.getValue();
+//        if ("Teacher".equals(selectedType)) {
+//            String id = cmbStaffId.getValue();
+//
+//            try {
+//                TeacherDto dto = TeacherModel.searchTeacher(id);
+//                lblStaffName.setText(dto.getTeacherName());
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//        } else if ("Employee".equals(selectedType)) {
+//            String id = cmbStaffId.getValue();
+//
+//            try {
+//                StaffDto dto = staffModel.searchStaff(id);
+//                lblStaffName.setText(dto.getStaffName());
+//                lblEmail.setText(dto.getEmail());
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
     }
 
     public void GoExpenditure() {
@@ -373,11 +379,11 @@ public class SalaryController {
 
         var expenditureDto = new ExpenditureDto(desc,amount,year,month,localDate);
         try {
-            boolean isSuccess = ExpenditureModel.addExpenditure(expenditureDto);
+            boolean isSuccess = expenditureBO.saveExpenditure(expenditureDto);
             if (isSuccess) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Expenditure Payment Save Success!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

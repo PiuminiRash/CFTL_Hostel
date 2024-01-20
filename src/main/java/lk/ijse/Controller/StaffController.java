@@ -8,10 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.StaffBO;
 import lk.ijse.dto.StaffDto;
 import lk.ijse.dto.tm.StaffTm;
-import lk.ijse.model.StaffModel;
-import lk.ijse.model.StudentModel;
+import lk.ijse.dto.StaffModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,7 +38,7 @@ public class StaffController {
     @FXML
     private TableColumn<?, ?> colDelete;
 
-    private StaffModel staffModel = new StaffModel();
+    StaffBO staffBO = (StaffBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.STAFF);
 
     private ObservableList<StaffTm> obList = FXCollections.observableArrayList();
 
@@ -54,12 +55,12 @@ public class StaffController {
 
     private void openStaffDetails(String staffId) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/studentprofile_form.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/staffprofile_form.fxml"));
             AnchorPane studentProfilePane = loader.load();
 
-            StudentProfileController studentProfileController = loader.getController();
+            StaffProfileController staffProfileController = loader.getController();
 
-            studentProfileController.loadStudent(staffId);
+            staffProfileController.loadStaff(staffId);
 
             root.getChildren().clear();
             root.getChildren().add(studentProfilePane);
@@ -92,7 +93,7 @@ public class StaffController {
         ObservableList<StaffTm> obList = FXCollections.observableArrayList();
 
         try {
-            List<StaffDto> dtoList = staffModel.getAllStaff();
+            List<StaffDto> dtoList = staffBO.getAllStaff();
 
             for (StaffDto dto : dtoList) {
                 Button deleteBtn = new Button("Delete");
@@ -136,13 +137,13 @@ public class StaffController {
 
     private void DeleteStudent(String staffId){
         try {
-            boolean isDeleted = staffModel.deleteStaff(staffId);
+            boolean isDeleted = staffBO.deleteStaff(staffId);
             if(isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Staff deleted!").show();
             } else {
                 new Alert(Alert.AlertType.CONFIRMATION, "Staff not deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
         tblStaffDetails.refresh();

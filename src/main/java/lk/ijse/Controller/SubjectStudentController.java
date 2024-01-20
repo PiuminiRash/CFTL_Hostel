@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import lk.ijse.dto.StudentDto;
 import lk.ijse.dto.tm.SubjectStudentTm;
-import lk.ijse.model.StudentModel;
+import lk.ijse.dto.StudentModel;
 
 import java.sql.SQLException;
 import java.util.List;

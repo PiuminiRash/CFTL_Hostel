@@ -9,9 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.StudentBO;
 import lk.ijse.dto.StudentDto;
 import lk.ijse.dto.tm.StudentTm;
-import lk.ijse.model.StudentModel;
+import lk.ijse.dto.StudentModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -42,6 +44,8 @@ public class ViewStudentController {
     private TableColumn<?,?> colSection;
 
     private StudentModel studentModel = new StudentModel();
+
+    StudentBO studentBO = (StudentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.STUDENT);
 
     private ObservableList<StudentTm> obList = FXCollections.observableArrayList();
 
@@ -112,13 +116,13 @@ public class ViewStudentController {
 
     private void DeleteStudent(String studentId){
         try {
-            boolean isDeleted = studentModel.deleteStudent(studentId);
+            boolean isDeleted = studentBO.deleteStudent(studentId);
             if(isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Student deleted!").show();
             } else {
                 new Alert(Alert.AlertType.CONFIRMATION, "Student not deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
         tblStudentDetails.refresh();

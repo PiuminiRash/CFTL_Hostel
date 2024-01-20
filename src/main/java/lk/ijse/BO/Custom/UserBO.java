@@ -1,2 +1,4 @@
-package lk.ijse.BO.Custom;public interface UserBO {
+package lk.ijse.BO.Custom;
+
+public interface UserBO {
 }

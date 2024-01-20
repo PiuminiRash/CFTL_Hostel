@@ -9,16 +9,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import lk.ijse.dto.SectionsDto;
-import lk.ijse.dto.StaffDto;
-import lk.ijse.dto.StudentDto;
-import lk.ijse.dto.tm.AddTeacherTm;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.SectionDetailsBO;
+import lk.ijse.BO.Custom.StaffBO;
+import lk.ijse.BO.Custom.SubjectBO;
+import lk.ijse.BO.Custom.SubjectDetailsBO;
+import lk.ijse.dto.SectionModel;
+import lk.ijse.dto.StaffModel;
+import lk.ijse.dto.SubjectModel;
+import lk.ijse.dto.*;
 import lk.ijse.dto.tm.SectionTm;
 import lk.ijse.dto.tm.StaffTm;
-import lk.ijse.dto.tm.StudentTm;
-import lk.ijse.model.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ManageSubjectController {
@@ -55,28 +59,32 @@ public class ManageSubjectController {
     @FXML
     private TableColumn<?, ?> colSelect;
 
+    StaffBO staffBO = (StaffBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.STAFF);
+
+    SubjectBO subjectBO = (SubjectBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.SUBJECT);
+
+    SubjectDetailsBO subjectDetailsBO = (SubjectDetailsBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.SUBJECTDETAILS);
+
+    SectionDetailsBO sectionDetailsBO = (SectionDetailsBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.SECTIONDETAILS);
+
     private SectionModel sectionModel = new SectionModel();
 
     private StaffModel staffModel = new StaffModel();
 
     private SubjectModel subjectModel = new SubjectModel();
 
-    private PlaceSubjectModel placeSubjectModel = new PlaceSubjectModel();
+    private ObservableList<SectionTm> obListSection = FXCollections.observableArrayList();
 
-    private SubjectDetailsModel subjectDetailsModel = new SubjectDetailsModel();
-
-    private ObservableList<SectionTm> obList = FXCollections.observableArrayList();
-
-    private ObservableList<StaffTm> obListA = FXCollections.observableArrayList();
+    private ObservableList<StaffTm> obListTeacher = FXCollections.observableArrayList();
 
     public void initialize() {
         sectionSetCellValueFactory();
         teacherSetCellValueFactory();
         loadSection();
         loadTeacher();
-        generateNextSubjectCode();
+        //generateNextSubjectCode();
 
-        cmbBuckets.getItems().addAll("Bucket 01", "Bucket 02" , "Bucket 03");
+        cmbBuckets.getItems().addAll("Bucket 01", "Bucket 02", "Bucket 03");
     }
 
     private void generateNextSubjectCode() {
@@ -99,9 +107,6 @@ public class ManageSubjectController {
         colSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
     }
 
-    public void btnSaveOnAction(ActionEvent actionEvent) {
-    }
-
     private void loadSection() {
         var model = new SectionModel();
 
@@ -109,14 +114,14 @@ public class ManageSubjectController {
             List<SectionsDto> sectionsDtos = sectionModel.getAllSections();
             for (SectionsDto dto : sectionsDtos) {
                 RadioButton select = new RadioButton(" ");
-                obList.add(
+                obListSection.add(
                         new SectionTm(
                                 dto.getSectionName(),
                                 select
                         )
                 );
             }
-            tblSection.setItems(obList);
+            tblSection.setItems(obListSection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -127,10 +132,10 @@ public class ManageSubjectController {
 
         String type = "Teacher";
         try {
-            List<StaffDto> staffDtos = staffModel.getAllStaffType(type);
+            List<StaffDto> staffDtos = staffBO.getAllStaffType(type);
             for (StaffDto dto : staffDtos) {
                 RadioButton select = new RadioButton(" ");
-                obListA.add(
+                obListTeacher.add(
                         new StaffTm(
                                 dto.getStaffId(),
                                 dto.getStaffName(),
@@ -138,8 +143,52 @@ public class ManageSubjectController {
                         )
                 );
             }
-            tblTeacher.setItems(obListA);
+            tblTeacher.setItems(obListTeacher);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void btnSaveOnAction(ActionEvent actionEvent) {
+        String subjectCode = txtSubjectId.getText();
+        String subjectName = txtSubjectName.getText();
+        String bucket = cmbBuckets.getValue();
+
+        List<SectionDetailsDto> sectionDetailsDtosList = new ArrayList<>();
+        List<SubjectDetailsDto> subjectDetailsDtoList = new ArrayList<>();
+
+        SubjectDto subjectDto = new SubjectDto(subjectCode,subjectName,bucket);
+
+        for (SectionTm sectionTm : obListSection) {
+            if (sectionTm.getSelect().isSelected()) {
+                String section = sectionTm.getSectionName();
+
+                SectionDetailsDto sectionDetailsDto = new SectionDetailsDto(section,subjectCode);
+                sectionDetailsDtosList.add(sectionDetailsDto);
+            }
+        }
+
+        for (StaffTm staffTm : obListTeacher) {
+            if (staffTm.getSelect().isSelected()) {
+                String teacher = staffTm.getStaffId();
+
+                SubjectDetailsDto subjectDetailsDto = new SubjectDetailsDto(subjectCode,teacher);
+                subjectDetailsDtoList.add(subjectDetailsDto);
+            }
+        }
+
+        try {
+            boolean isSubjectSave = subjectBO.saveSubject(subjectDto);
+            boolean isSectionDetailSuccess = sectionDetailsBO.saveSectionDetails(sectionDetailsDtosList);
+            boolean isSubjectDetailsSuccess = subjectDetailsBO.saveSubjectDetails(subjectDetailsDtoList);
+            if (isSubjectSave) {
+                if (isSectionDetailSuccess) {
+                    if (isSubjectDetailsSuccess) {
+                        new Alert(Alert.AlertType.CONFIRMATION, "Subject Save Success!").show();
+                    }
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }

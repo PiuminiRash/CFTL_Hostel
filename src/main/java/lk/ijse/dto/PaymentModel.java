@@ -1,4 +1,4 @@
-package lk.ijse.model;
+package lk.ijse.dto;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.PaymentDto;
@@ -50,7 +50,7 @@ public class PaymentModel {
         return paymentTmList;
     }
 
-    public List<PaymentDto> getAllPayment(String studentId) throws SQLException {
+    public static List<PaymentDto> getAllPayment(String studentId) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT * FROM Payment WHERE StudentId = ?";

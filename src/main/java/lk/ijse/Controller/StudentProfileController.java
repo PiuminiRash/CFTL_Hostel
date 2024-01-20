@@ -11,8 +11,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.GaurdianBO;
+import lk.ijse.BO.Custom.PaymentBO;
+import lk.ijse.BO.Custom.RoomBO;
+import lk.ijse.BO.Custom.StudentBO;
+import lk.ijse.Entity.*;
 import lk.ijse.dto.*;
-import lk.ijse.model.*;
 import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
@@ -66,15 +71,13 @@ public class StudentProfileController {
     @FXML
     private JFXTextField txtRoomName;
 
-    private StudentModel studentModel = new StudentModel();
+    StudentBO studentBO = (StudentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.STUDENT);
 
-    private GardianModel gardianModel = new GardianModel();
+    RoomBO roomBO = (RoomBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.ROOM);
 
-    private RoomModel roomModel = new RoomModel();
+    GaurdianBO gaurdianBO = (GaurdianBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.GAURDIAN);
 
-    private SectionModel sectionModel = new SectionModel();
-
-    private PaymentModel paymentModel = new PaymentModel();
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.PAYMENT);
 
     private ObservableList<String> obList = FXCollections.observableArrayList();
 
@@ -113,7 +116,7 @@ public class StudentProfileController {
 
     public void loadStudent(String studentId){
         try{
-            StudentDto studentDto = studentModel.searchStudent(studentId);
+            StudentDto studentDto = studentBO.searchStudent(studentId);
             txtStudentId.setText(studentId);
             txtStudentName.setText(studentDto.getStudentName());
             txtAddress.setText(studentDto.getStudentAddress());
@@ -125,16 +128,16 @@ public class StudentProfileController {
 
             String roomNo = txtRoomNo.getText();
 
-            GardianDto gardianDto = gardianModel.searchGuardian(studentId);
+            GardianDto gardianDto = gaurdianBO.searchGuardian(studentId);
             txtGardianName.setText(gardianDto.getGardianName());
             txtGardianMail.setText(gardianDto.getEmail());
             txtGardianContactNo.setText(gardianDto.getContactNo());
 
-            RoomDto roomDto = roomModel.searchRoom(roomNo);
+            RoomDto roomDto = roomBO.searchRoom(roomNo);
             txtRoomName.setText(roomDto.getRoomName());
 
             try {
-                List<PaymentDto> dtoList = paymentModel.getAllPayment(studentId);
+                List<PaymentDto> dtoList =paymentBO .getAllPay(studentId);
 
                 for (PaymentDto dto : dtoList) {
                     obList.add(
@@ -146,7 +149,7 @@ public class StudentProfileController {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -202,6 +205,69 @@ public class StudentProfileController {
         }
     }
 
+    private void loadSection() {
+        ObservableList<String> obList = FXCollections.observableArrayList();
+        try {
+            List<SectionsDto> sectionsDtos = SectionModel.getAllSections();
+
+            for (SectionsDto dto : sectionsDtos) {
+                obList.add(dto.getSectionName());
+            }
+            cmbSection.setItems(obList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void btnUpdateOnAction(ActionEvent actionEvent) {
+        String id =  txtStudentId.getText();
+        String name = txtStudentName.getText();
+        String address = txtAddress.getText();
+        String section = cmbSection.getValue();
+        String bucket1 = cmbBucket01.getValue();
+        String bucket2 = cmbBucket02.getValue();
+        String bucket3 = cmbBucket03.getValue();
+        String room = txtRoomNo.getText();
+        String gardian = txtGardianName.getText();
+        String email = txtGardianMail.getText();
+        String contact = txtGardianContactNo.getText();
+        try {
+            if (!validateStudent() || !validateGuardian()) {
+                return;
+            }
+
+            StudentDto studentDto = new StudentDto(id, name, address, section, bucket1, bucket2, bucket3 , room);
+            boolean isStudentSaved = studentBO.updateStudent(studentDto);
+
+            if (isStudentSaved) {
+                GardianDto guardianDto = new GardianDto(id, gardian, email, contact);
+                boolean isGuardianSaved = gaurdianBO.updateGardian(guardianDto);
+
+                if (isGuardianSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Student Details Saved!").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error saving").show();
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+
+    private boolean validateGuardian(){
+        boolean isValidate = true;
+        boolean name = Pattern.matches("[A-Za-z]{5,}", txtGardianName.getText());
+        if (!name){
+            showErrorNotification("Invalid Gardian Name", "The Gardian name you entered is invalid");
+            isValidate = false;
+        }
+        boolean email = Pattern.matches("^(.+)@(.+)$",txtGardianMail.getText());
+        if (!email) {
+            showErrorNotification("Invalid Email","The Email you entered is invalid");
+        }
+        return isValidate;
+    }
+
     private boolean validateStudent() {
         boolean isValidate = true;
         boolean id = Pattern.matches("[S][\\d]{2,}",txtStudentId.getText());
@@ -224,19 +290,6 @@ public class StudentProfileController {
             showErrorNotification("Invalid section", "The section you entered is invalid");
             isValidate = false;
         }
-        //boolean bucket1 = Pattern.matches("([A-Z])\\w+",cmbBucket01.getValue());
-//        if (!bucket1){
-//            showErrorNotification("Invalid bucket 1", "The bucket 1 you entered is invalid");
-//            isValidate = false;
-//        }boolean bucket2 = Pattern.matches("([A-Z])\\w+",cmbBucket02.getValue());
-//        if (!bucket2){
-//            showErrorNotification("Invalid bucket 2", "The bucket 2 you entered is invalid");
-//            isValidate = false;
-//        }boolean bucket3 = Pattern.matches("([A-Z])\\w+",cmbBucket03.getValue());
-//        if (!bucket3){
-//            showErrorNotification("Invalid bucket 3", "The bucket 3 you entered is invalid");
-//            isValidate = false;
-//        }
         return isValidate;
     }
 
@@ -245,43 +298,5 @@ public class StudentProfileController {
                 .title(title)
                 .text(text)
                 .showError();
-    }
-
-    private void loadSection() {
-        ObservableList<String> obList = FXCollections.observableArrayList();
-        try {
-            List<SectionsDto> sectionsDtos = sectionModel.getAllSections();
-
-            for (SectionsDto dto : sectionsDtos) {
-                obList.add(dto.getSectionName());
-            }
-            cmbSection.setItems(obList);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void btnUpdateOnAction(ActionEvent actionEvent) {
-        String id =  txtStudentId.getText();
-        String name = txtStudentName.getText();
-        String address = txtAddress.getText();
-        String section = cmbSection.getValue();
-        String bucket1 = cmbBucket01.getValue();
-        String bucket2 = cmbBucket02.getValue();
-        String bucket3 = cmbBucket03.getValue();
-        String room = txtRoomNo.getText();
-        try{
-
-            var dto = new StudentDto (id,name,address,section,bucket1,bucket2,bucket3,room);
-            boolean isValidate = validateStudent();
-            if (isValidate) {
-                boolean isUpdate = studentModel.updateStudent(dto);
-                if (isUpdate){
-                    new Alert(Alert.AlertType.CONFIRMATION,"updated Student").show();
-                }
-            }
-        }catch (SQLException e){
-            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
-        }
     }
 }

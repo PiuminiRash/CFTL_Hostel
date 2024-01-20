@@ -31,7 +31,6 @@
       </ImageView>
       <AnchorPane layoutX="14.0" layoutY="105.0" prefHeight="683.0" prefWidth="192.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="105.0">
          <children>
-            <JFXButton fx:id="exam" layoutX="1.0" layoutY="384.0" onAction="#btnExamOnAction" prefHeight="35.0" prefWidth="191.0" style="-fx-background-color: #ffffff;" text="Exam" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <JFXButton fx:id="home" layoutY="179.0" minHeight="30.0" minWidth="55.0" onAction="#btnHomeOnAction" prefHeight="35.0" prefWidth="191.0" style="-fx-background-color: #ffffff;" text=" Home" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="2.0" layoutY="182.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="2.0">
                <image>
@@ -62,13 +61,8 @@
                   <Image url="@../assests/subject-removebg-preview.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="income" layoutX="1.0" layoutY="425.0" onAction="#btnIncomeOnAction" prefHeight="35.0" prefWidth="191.0" style="-fx-background-color: #ffffff;" text="Income" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="3.0" layoutY="386.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../assests/exam-removebg-preview.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="4.0" layoutY="428.0" pickOnBounds="true" preserveRatio="true">
+            <JFXButton fx:id="income" layoutY="383.0" onAction="#btnIncomeOnAction" prefHeight="35.0" prefWidth="191.0" style="-fx-background-color: #ffffff;" text="Income" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="2.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../assests/exam-removebg-preview.png" />
                </image>

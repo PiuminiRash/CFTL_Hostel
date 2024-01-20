@@ -1,2 +1,4 @@
-package lk.ijse.BO.Custom.Impl;public class SalaryBOImpl {
+package lk.ijse.BO.Custom.Impl;
+
+public class SalaryBOImpl {
 }

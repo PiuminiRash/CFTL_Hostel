@@ -10,8 +10,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.GaurdianBO;
+import lk.ijse.BO.Custom.StudentBO;
+import lk.ijse.dto.SectionModel;
+import lk.ijse.dto.SubjectModel;
 import lk.ijse.dto.*;
-import lk.ijse.model.*;
 import org.controlsfx.control.Notifications;
 
 import java.sql.SQLException;
@@ -69,7 +73,9 @@ public class StudentManageController {
 
     private String section;
 
-    private StudentModel studentModel = new StudentModel();
+    StudentBO studentBO = (StudentBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.STUDENT);
+
+    GaurdianBO gaurdianBO = (GaurdianBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.GAURDIAN);
 
     private SectionModel sectionModel = new SectionModel();
 
@@ -79,12 +85,12 @@ public class StudentManageController {
     }
 
     private void generateNextStudentId() {
-        try {
-            String studentId = studentModel.generateNextStudentId();
-            txtStudentId.setText(studentId);
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-        }
+//        try {
+//            //String studentId = studentModel.generateNextStudentId();
+//            //txtStudentId.setText(studentId);
+//        } catch (SQLException e) {
+//            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+//        }
     }
 
     public void btnSaveOnAction(ActionEvent actionEvent) {
@@ -101,31 +107,17 @@ public class StudentManageController {
         String Email = txtEmail.getText();
         String ContactNo = txtContactNo.getText();
 
-//        try {
-//            if (!validateStudent()){
-//                return;
-//            }
-//            var dto = new StudentDto(studentId,studentName,address,section,bucket1,bucket2,bucket3);
-//            boolean isSaved = StudentModel.saveStudent(dto);
-//
-//            if (isSaved) {
-//                new Alert(Alert.AlertType.CONFIRMATION, "Student Saved!").show();
-//                clearFields();
-//            }
-//        } catch (SQLException e) {
-//            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-//        }
         try {
             if (!validateStudent() || !validateGuardian()) {
                 return;
             }
 
             StudentDto studentDto = new StudentDto(studentId, studentName, address, section, bucket1, bucket2, bucket3 , roomNo);
-            boolean isStudentSaved = StudentModel.saveStudent(studentDto);
+            boolean isStudentSaved = studentBO.saveStudent(studentDto);
 
             if (isStudentSaved) {
                 GardianDto guardianDto = new GardianDto(studentId, guardianName, Email, ContactNo);
-                boolean isGuardianSaved = GardianModel.saveGardian(guardianDto);
+                boolean isGuardianSaved = gaurdianBO.saveGardian(guardianDto);
 
                 if (isGuardianSaved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Student Details Saved!").show();
@@ -134,18 +126,13 @@ public class StudentManageController {
                     new Alert(Alert.AlertType.ERROR, "Error saving guardian").show();
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 
     private boolean validateStudent() {
         boolean isValidate = true;
-//        boolean id = Pattern.matches("[S][\\d]{2,}",txtStudentId.getText());
-//        if (!id){
-//            showErrorNotification("Invalid id", "The id you entered is invalid");
-//            isValidate = false;
-//        }
         boolean name = Pattern.matches("[A-Za-z]{5,}", txtStudentName.getText());
         if (!name){
             showErrorNotification("Invalid Student Name", "The Student name you entered is invalid");
@@ -161,19 +148,6 @@ public class StudentManageController {
             showErrorNotification("Invalid section", "The section you entered is invalid");
             isValidate = false;
         }
-        //boolean bucket1 = Pattern.matches("([A-Z])\\w+",cmbBucket01.getValue());
-//        if (!bucket1){
-//            showErrorNotification("Invalid bucket 1", "The bucket 1 you entered is invalid");
-//            isValidate = false;
-//        }boolean bucket2 = Pattern.matches("([A-Z])\\w+",cmbBucket02.getValue());
-//        if (!bucket2){
-//            showErrorNotification("Invalid bucket 2", "The bucket 2 you entered is invalid");
-//            isValidate = false;
-//        }boolean bucket3 = Pattern.matches("([A-Z])\\w+",cmbBucket03.getValue());
-//        if (!bucket3){
-//            showErrorNotification("Invalid bucket 3", "The bucket 3 you entered is invalid");
-//            isValidate = false;
-//        }
         return isValidate;
     }
 
@@ -181,14 +155,13 @@ public class StudentManageController {
         boolean isValidate = true;
         boolean name = Pattern.matches("[A-Za-z]{5,}", txtStudentName.getText());
         if (!name){
-            showErrorNotification("Invalid Student Name", "The Student name you entered is invalid");
+            showErrorNotification("Invalid Gardian Name", "The Gardian name you entered is invalid");
             isValidate = false;
         }
         boolean email = Pattern.matches("^(.+)@(.+)$",txtEmail.getText());
         if (!email) {
             showErrorNotification("Invalid Email","The Email you entered is invalid");
         }
-        //boolean contactNo Pattern.matches()
         return isValidate;
     }
 

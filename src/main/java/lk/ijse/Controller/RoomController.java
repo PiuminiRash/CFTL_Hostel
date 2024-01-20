@@ -1,6 +1,5 @@
 package lk.ijse.Controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,11 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import lk.ijse.BO.BOFactory;
+import lk.ijse.BO.Custom.RoomBO;
 import lk.ijse.dto.RoomDto;
-import lk.ijse.dto.StudentDto;
 import lk.ijse.dto.tm.RoomTm;
-import lk.ijse.model.RoomModel;
-import lk.ijse.model.StudentModel;
+import lk.ijse.dto.RoomModel;
+import lk.ijse.dto.StudentModel;
 import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
@@ -60,8 +60,7 @@ public class RoomController  {
     @FXML
     private JFXTextField txtNoOfBed;
 
-    @FXML
-    private JFXButton UpdateRoom;
+    RoomBO roomBO = (RoomBO) BOFactory.getBOFactory().getBO(BOFactory.BOTypes.ROOM);
 
     private RoomModel roomModel = new RoomModel();
 
@@ -97,13 +96,6 @@ public class RoomController  {
         }
     }
 
-    private void setData(RoomTm row) {
-        txtRoomNo.setText(row.getRoomNo());
-        txtRoomName.setText(row.getRoomName());
-        txtNoOfBed.setText(String.valueOf(row.getNoOfBed()));
-        //txtStudentCount.setText(String.valueOf(row.getStudentCount()));
-    }
-
     private void generateNextRoomNo() {
         try {
             String roomNo = roomModel.generateNextRoomNo();
@@ -126,7 +118,7 @@ public class RoomController  {
         var model = new RoomModel();
 
         try {
-            List<RoomDto> dtoList = RoomModel.getAllRoom();
+            List<RoomDto> dtoList = roomBO.getAllRoom();
 
             for (RoomDto dto : dtoList) {
                 Button deleteBtn = new Button("Delete");
@@ -176,13 +168,13 @@ public class RoomController  {
 
     private void DeleteRoom(String roomNo){
         try {
-            boolean isDeleted = RoomModel.deleteRoom(roomNo);
+            boolean isDeleted = roomBO.deleteRoom(roomNo);
             if(isDeleted) {
                 new Alert(Alert.AlertType.CONFIRMATION, "Room deleted!").show();
             } else {
                 new Alert(Alert.AlertType.CONFIRMATION, "Room not deleted!").show();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
         tblRoomDetails.refresh();
@@ -192,32 +184,29 @@ public class RoomController  {
         String room_no = txtRoomNo.getText();
         String room_name = txtRoomName.getText();
         int no_of_beds = Integer.parseInt(txtNoOfBed.getText());
-        //int student_count = Integer.parseInt(txtStudentCount.getText());
-
 
         try{
             if (!validateRoom()){
                 return;
             }
-            var dto = new RoomDto(room_no,room_name,no_of_beds);
-            boolean isSaved = roomModel.saveRoom(dto);
+            var roomDto = new RoomDto(room_no,room_name,no_of_beds);
+            boolean isSaved = roomBO.saveRoom(roomDto);
             if (isSaved){
                 new Alert(Alert.AlertType.CONFIRMATION,"room saved").show();
                 clearFields();
             }
-        }catch (SQLException e){
+        }catch (SQLException | ClassNotFoundException e){
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
         obList.clear();
-        //generateNextRoomNo();
-        //loadAllRoomDetails();
+        generateNextRoomNo();
+        loadAllRoomDetails();
     }
 
     private void clearFields() {
         txtRoomNo.setText("");
         txtRoomName.setText("");
         txtNoOfBed.setText("");
-        //txtStudentCount.setText("");
     }
 
     private boolean validateRoom() {
@@ -237,11 +226,6 @@ public class RoomController  {
             showErrorNotification("Invalid count", "The beds count you entered is invalid");
             isValidate = false;
         }
-//        boolean count = Pattern.matches("[0-9]{1,}",txtStudentCount.getText());
-//        if (!beds){
-//            showErrorNotification("Invalid count", "The student count you entered is invalid");
-//            isValidate = false;
-//        }
         return isValidate;
     }
 
@@ -250,8 +234,6 @@ public class RoomController  {
                 .title(title)
                 .text(text)
                 .showError();
-
-
     }
 
     public void txtSearchRoomOnAction(ActionEvent actionEvent) {

@@ -1,2 +1,4 @@
-package lk.ijse.BO.Custom;public interface SalaryBO {
+package lk.ijse.BO.Custom;
+
+public interface SalaryBO {
 }

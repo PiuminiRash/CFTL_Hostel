@@ -1,4 +1,4 @@
-package lk.ijse.model;
+package lk.ijse.dto;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.BucketDto;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SectionModel {
-    public List<SectionsDto> getAllSections() throws SQLException {
+    public static List<SectionsDto> getAllSections() throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT * FROM Section";

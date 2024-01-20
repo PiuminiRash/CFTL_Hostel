@@ -10,8 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.UserDto;
 import lk.ijse.dto.tm.UserTm;
-import lk.ijse.model.StudentModel;
-import lk.ijse.model.UserModel;
+import lk.ijse.dto.StudentModel;
+import lk.ijse.dto.UserModel;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -9,21 +9,6 @@ CREATE TABLE Users (
                        email VARCHAR(200)NOT NULL
 );
 
-CREATE TABLE JobType(
-                        JobCode VARCHAR(100)PRIMARY KEY ,
-                        JobType VARCHAR(150) ,
-                        Description VARCHAR(150)
-);
-
-CREATE TABLE Employee(
-                         EmployeeId VARCHAR(100)PRIMARY KEY ,
-                         EmployeeName VARCHAR(250),
-                         Email VARCHAR(300),
-                         JobCode VARCHAR(150),
-                         NIC  VARCHAR(100),
-                         CONSTRAINT FOREIGN KEY (JobCode) REFERENCES JobType(Jobcode) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 CREATE TABLE Staff(
                       StaffType VARCHAR(100) NOT NULL ,
                       StaffId VARCHAR(100) PRIMARY KEY ,
@@ -33,15 +18,8 @@ CREATE TABLE Staff(
                       Email VARCHAR(200) NOT NULL
 );
 
-CREATE TABLE Teacher(
-                        TeacherId VARCHAR(100)PRIMARY KEY ,
-                        TeacherName VARCHAR(200),
-                        Email VARCHAR(200),
-                        NIC VARCHAR(100)
-);
-
 CREATE TABLE Section(
-    SectionName VARCHAR(100)PRIMARY KEY
+    SectionName VARCHAR(200) PRIMARY KEY
 );
 
 CREATE TABLE Bucket(
@@ -74,7 +52,7 @@ CREATE TABLE Room(
 );
 
 CREATE TABLE Timetable(
-                          SectionName VARCHAR(100),
+                          SectionName VARCHAR(200),
                           Monday VARCHAR(100),
                           Tuesday VARCHAR(100),
                           Wednesday VARCHAR(100),
@@ -90,19 +68,18 @@ CREATE TABLE Salary(
                        Type VARCHAR(100)NOT NULL ,
                        Month VARCHAR(100)NOT NULL ,
                        StaffId VARCHAR(100),
-                       StaffName VARCHAR(250),
                        SalaryAmt DOUBLE NOT NULL ,
                        Bonus DOUBLE NOT NULL ,
                        E DOUBLE NOT NULL ,
-                       FinalSalary DOUBLE NOT NULL
+                       FinalSalary DOUBLE NOT NULL,
+                       CONSTRAINT FOREIGN KEY (StaffId) REFERENCES Staff(StaffId) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Attendance(
                            AttendanceId INT PRIMARY KEY AUTO_INCREMENT,
                            Date DATE,
-                           TeacherId VARCHAR(100)NOT NULL ,
-                           TeacherName VARCHAR(200)NOT NULL ,
-                           CONSTRAINT FOREIGN KEY (TeacherId) REFERENCES Teacher(TeacherId) ON DELETE CASCADE ON UPDATE CASCADE
+                           StaffId VARCHAR(100)NOT NULL ,
+                           CONSTRAINT FOREIGN KEY (StaffId) REFERENCES Staff(StaffId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Student(
@@ -119,11 +96,11 @@ CREATE TABLE Student(
 );
 
 CREATE TABLE Gardian(
-                             StudentId VARCHAR (100) ,
-                             GardianName VARCHAR(200) NOT NULL ,
-                             Email VARCHAR(300) NOT NULL ,
-                             ContactNo VARCHAR(10) NOT NULL ,
-                             CONSTRAINT FOREIGN KEY (StudentId) REFERENCES Student (StudentId) ON DELETE CASCADE ON UPDATE CASCADE
+                        StudentId VARCHAR (100) ,
+                        GardianName VARCHAR(200) NOT NULL ,
+                        Email VARCHAR(300) NOT NULL ,
+                        ContactNo VARCHAR(10) NOT NULL ,
+                        CONSTRAINT FOREIGN KEY (StudentId) REFERENCES Student (StudentId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Payment (
@@ -137,23 +114,25 @@ CREATE TABLE Payment (
 );
 
 CREATE TABLE Subject(
-                        SectionName VARCHAR(100),
-                        Bucket VARCHAR(100),
                         SubjectCode VARCHAR(100)PRIMARY KEY ,
                         SubjectName VARCHAR(250)NOT NULL ,
-                        CONSTRAINT FOREIGN KEY (SectionName) REFERENCES Section(SectionName) ON DELETE CASCADE ON UPDATE CASCADE,
-                        CONSTRAINT FOREIGN KEY (Bucket) REFERENCES Bucket(BucketId)  ON DELETE CASCADE ON UPDATE CASCADE
+                        Bucket VARCHAR(100)
 );
 
 CREATE TABLE SubjectDetails(
                                SubjectCode VARCHAR(100),
-                               TeacherId VARCHAR(100)NOT NULL ,
-                               TeacherName VARCHAR(250)NOT NULL ,
-                               CONSTRAINT FOREIGN KEY (SubjectCode) REFERENCES Subject(SubjectCode) ON DELETE CASCADE ON UPDATE CASCADE,
-                               CONSTRAINT FOREIGN KEY (TeacherId) REFERENCES Teacher(TeacherId) ON DELETE CASCADE ON UPDATE CASCADE
+                               StaffId VARCHAR(100),
+                               CONSTRAINT FOREIGN KEY (SubjectCode) REFERENCES Subject (SubjectCode) ON DELETE CASCADE ON UPDATE CASCADE,
+                               CONSTRAINT FOREIGN KEY (StaffId) REFERENCES Staff (StaffId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-INSERT INTO Users VALUES ('Sithira Roneth','@Sithira200335800059','sithiiraroneth@gmail.com');
+CREATE TABLE SectionDetails(
+                               SectionName VARCHAR(200),
+                               SubjectCode VARCHAR(100),
+                               CONSTRAINT FOREIGN KEY (SectionName) REFERENCES Section (SectionName) ON UPDATE CASCADE ON DELETE CASCADE,
+                               CONSTRAINT FOREIGN KEY (SubjectCode) REFERENCES Subject (SubjectCode) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 
 INSERT INTO Section VALUES ('Science');
 INSERT INTO Section VALUES ('Maths');
@@ -170,4 +149,3 @@ INSERT INTO Timetable VALUES ('Science','SelfStudy','SelfStudy','SelfStudy','Sel
 INSERT INTO Timetable VALUES ('Commerce','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy');
 INSERT INTO Timetable VALUES ('Maths','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy');
 INSERT INTO Timetable VALUES ('Tec','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy','SelfStudy');
-

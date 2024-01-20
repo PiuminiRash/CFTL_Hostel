@@ -1,32 +1,15 @@
-package lk.ijse.model;
+package lk.ijse.dto;
 
 import lk.ijse.DB.DbConnection;
 import lk.ijse.dto.AttendanceDto;
-import lk.ijse.dto.EmployeeDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/*public class AttendanceModel {
-    public static boolean addAttendance(AttendanceDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "INSERT INTO Attendance (Date,TeacherId,TeacherName) VALUES(?,?,?)";
-
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1, dto.getDate());
-        pstm.setString(2, dto.getTeacherid());
-        pstm.setString(3,dto.getTeachername());
-
-        boolean isSaved = pstm.executeUpdate()>0;
-        return isSaved;
-    }
-}*/
 public class AttendanceModel {
     public static boolean addAttendance(AttendanceDto dto) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
@@ -36,7 +19,6 @@ public class AttendanceModel {
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
             pstm.setString(1, dto.getDate());
             pstm.setString(2, dto.getTeacherId());
-            pstm.setString(3, dto.getTeacherName());
 
             return pstm.executeUpdate() > 0;
         }
@@ -48,12 +30,11 @@ public class AttendanceModel {
         String sql = "INSERT INTO Attendance (Date, TeacherId, TeacherName) VALUES (?, ?, ?)";
 
         try (PreparedStatement pstm = connection.prepareStatement(sql)) {
-            connection.setAutoCommit(false); // Start a transaction
+            connection.setAutoCommit(false);
 
             for (AttendanceDto dto : attendanceDtoList) {
                 pstm.setString(1, dto.getDate());
                 pstm.setString(2, dto.getTeacherId());
-                pstm.setString(3, dto.getTeacherName());
 
                 pstm.addBatch();
             }
@@ -83,7 +64,7 @@ public class AttendanceModel {
             try (ResultSet resultSet = pstm.executeQuery()) {
                 if (resultSet.next()) {
                     int attendanceCount = resultSet.getInt("attendanceCount");
-                    return new AttendanceDto(null, null, null, false);
+                    return new AttendanceDto(null, null, false);
                 }
             }
         }
@@ -104,9 +85,8 @@ public class AttendanceModel {
         while (resultSet.next()) {
             String date = resultSet.getString(1);
             String id = resultSet.getString(2);
-            String name = resultSet.getString(3);
 
-            dto = new AttendanceDto(date,id,name,false);
+            dto = new AttendanceDto(date,id,false);
         }
         return (List<AttendanceDto>) dto;
     }
@@ -124,15 +104,13 @@ public class AttendanceModel {
 
         while (resultSet.next()) {
             String id = resultSet.getString(2);
-            String name = resultSet.getString(3);
             String day = resultSet.getString(4);
 
-            AttendanceDto dto = new AttendanceDto(id, name, day, false);
+            AttendanceDto dto = new AttendanceDto(id,day, false);
 
             dtoList.add(dto);
         }
 
         return dtoList;
     }
-
 }

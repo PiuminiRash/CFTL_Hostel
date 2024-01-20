@@ -1,6 +1,10 @@
-package lk.ijse.model;
+package lk.ijse.BO.Custom.Impl;
 
+import lk.ijse.BO.Custom.ExpenditureBO;
+import lk.ijse.DAO.Custom.ExpenditureDAO;
+import lk.ijse.DAO.DAOFactory;
 import lk.ijse.DB.DbConnection;
+import lk.ijse.Entity.Expenditure;
 import lk.ijse.dto.ExpenditureDto;
 import lk.ijse.dto.tm.ExpenditureTm;
 
@@ -11,24 +15,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpenditureModel {
-    public static boolean addExpenditure(ExpenditureDto dto) throws SQLException {
-        Connection connection = DbConnection.getInstance().getConnection();
-
-        String sql = "INSERT INTO expenditure (Description,Amount,Year,Month,Date) VALUES(?,?,?,?,?)";
-
-        PreparedStatement pstm = connection.prepareStatement(sql);
-        pstm.setString(1, dto.getDesc());
-        pstm.setString(2, String.valueOf(dto.getAmount()));
-        pstm.setString(3, String.valueOf(dto.getYear()));
-        pstm.setString(4, dto.getMonth());
-        pstm.setString(5, dto.getDate());
-
-        boolean isSaved = pstm.executeUpdate()>0;
-        return isSaved;
+public class ExpenditureBOImpl implements ExpenditureBO {
+    ExpenditureDAO expenditureDAO = (ExpenditureDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.EXPENDITURE);
+    @Override
+    public boolean saveExpenditure(ExpenditureDto dto) throws SQLException, ClassNotFoundException {
+        return expenditureDAO.save(new Expenditure(dto.getDesc(),dto.getAmount(),dto.getYear(), dto.getMonth(), dto.getDate()));
     }
 
-    public static List<ExpenditureTm> searchExpenditure(int year, String month) throws SQLException {
+    @Override
+    public List<ExpenditureTm> searchExpenditure(int year, String month) throws SQLException {
         Connection connection = DbConnection.getInstance().getConnection();
 
         String sql = "SELECT * FROM Expenditure WHERE Year = ? AND Month = ?";

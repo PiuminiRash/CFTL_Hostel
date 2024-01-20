@@ -9,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.SubjectDto;
 import lk.ijse.dto.tm.SubjectTm;
-import lk.ijse.model.SubjectModel;
+import lk.ijse.dto.SubjectModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -71,15 +71,15 @@ public class ViewSubjectController {
                 Button updateBtn = new Button("Update");
                 Button deleteBtn = new Button("Delete");
 
+                String section = dto.getSubjectCode();
                 setDeleteButtonOnAction(deleteBtn,dto.getSubjectCode());
                 setUpdateButtonOnAction(updateBtn,dto.getSubjectCode());
                 obList.add(
                         new SubjectTm(
                                 dto.getSubjectCode(),
                                 dto.getSubjectName(),
-                                dto.getSection(),
+                                section,
                                 dto.getBucket(),
-                                //updateBtn,
                                 deleteBtn
                         )
                 );

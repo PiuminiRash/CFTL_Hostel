@@ -1,2 +1,4 @@
-package lk.ijse.DAO;public interface SuperDAo {
+package lk.ijse.DAO;
+
+public interface SuperDAO {
 }

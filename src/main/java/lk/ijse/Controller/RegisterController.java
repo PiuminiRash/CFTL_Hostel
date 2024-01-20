@@ -11,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.dto.UserDto;
-import lk.ijse.model.UserModel;
+import lk.ijse.dto.UserModel;
 import org.controlsfx.control.Notifications;
 
 import java.io.IOException;
@@ -100,11 +100,11 @@ public class RegisterController {
             showErrorNotification("Invalid username", "The username you entered is invalid");
             isValidate = false;
         }
-        boolean password = Pattern.matches("^(.+)@(.+)$",txtPassword.getText());
-        if(!password){
-            showErrorNotification("invalid password","Enter the strong password Ex: @CollageOfFastTrack2013");
-            isValidate = false;
-        }
+//        boolean password = Pattern.matches("^(.+)@(.+)$",txtPassword.getText());
+//        if(!password){
+//            showErrorNotification("invalid password","Enter the strong password Ex: @CollageOfFastTrack2013");
+//            isValidate = false;
+//        }
         boolean email = Pattern.matches("^(.+)@(.+)$",txtemail.getText());
         if (!email){
             showErrorNotification("Invalid email", "The email you entered is invalid");

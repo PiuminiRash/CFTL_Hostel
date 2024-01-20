@@ -13,8 +13,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import lk.ijse.dto.SectionsDto;
 import lk.ijse.dto.tm.SectionTm;
-import lk.ijse.model.SectionModel;
-import lk.ijse.model.StudentModel;
+import lk.ijse.dto.SectionModel;
+import lk.ijse.dto.StudentModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
